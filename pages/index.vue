@@ -1,21 +1,24 @@
 <script setup>
-import { ref } from 'vue';
-const data = ref('');
-const resData = await useFetch('http://127.0.0.1:8081/test', { method: 'get', params: { id: 1 } });
-data.value = resData
+let xd = $ref(1)
+const data = reactive({ a: '小滴课堂' })
+
+const handleClick = () => {
+    xd = 2
+}
+
 </script>
 
 <template>
-    <div>
+    <div class="home" @click="handleClick">
         首页
-        <Banner />
-        <BannerChild />
-        <nuxt-link to="/about">跳转到路由页面</nuxt-link>
-        <nuxt-link to="/about?data='i am index'">跳转到路由页面</nuxt-link>
-        {{ data.data }}
+        <h1>{{ xd }}</h1>
+        <h1>{{ data.a }}</h1>
+        <a-button type="primary">按钮</a-button>
     </div>
 </template>
 
-<style lang='less' scoped>
-
+<style scoped>
+.home {
+    background-color: aqua;
+}
 </style>
