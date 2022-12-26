@@ -1,42 +1,36 @@
-# Nuxt 3 Minimal Starter
+# Nuxt3 启动模板
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# 安装
 
-## Setup
-
-Make sure to install the dependencies:
-
-```bash
+```shell
 # yarn
 yarn install
 
 # npm
 npm install
 
-# pnpm
-pnpm install --shamefully-hoist
+#pnpm
+pnpm install
 ```
 
-## Development Server
+# 启动开发服务器
 
-Start the development server on http://localhost:3000
+开发服务器默认启动在`http://localhost:3000`
 
-```bash
+```shell
 npm run dev
 ```
 
-## Production
+# 打包生产环境
 
-Build the application for production:
+将你的代码进行打包
 
-```bash
+```shell
 npm run build
 ```
 
-Locally preview production build:
+预览生产环境项目
 
-```bash
+```shell
 npm run preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
