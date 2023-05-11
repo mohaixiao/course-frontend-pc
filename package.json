@@ -6,12 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "predev": "ts-node --project ./tsconfig.node.json ./scripts/genAntdCss.tsx",
+    "prebuild": "cross-env NODE_ENV=production ts-node --project ./tsconfig.node.json ./scripts/genAntdCss.tsx"
   },
   "dependencies": {
     "@types/node": "20.1.1",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
+    "antd": "^5.4.7",
     "autoprefixer": "10.4.14",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.1",
@@ -21,5 +24,11 @@
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@ant-design/static-style-extract": "^1.0.1",
+    "cross-env": "^7.0.3",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.5.0"
   }
 }
