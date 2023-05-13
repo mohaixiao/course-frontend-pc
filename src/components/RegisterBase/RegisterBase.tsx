@@ -1,8 +1,18 @@
 import { Button, Checkbox, Form, Input } from "antd";
 import { WechatOutlined } from "@ant-design/icons";
 import Image from "next/image";
+import { changeToBase, changeToFinish } from "@/slices/registerSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
 
 export default function RegisterBase() {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const registerNow = () => {
+    dispatch(changeToBase());
+    dispatch(changeToFinish());
+  };
+
   return (
     <div className="mt-[20px]">
       <Form autoComplete="off">
@@ -67,6 +77,7 @@ export default function RegisterBase() {
             htmlType="submit"
             block
             className="rounded-full bg-[#4d555d] text-center w- text-white cursor-pointer"
+            onClick={registerNow}
           >
             立即注册
           </Button>
@@ -78,7 +89,7 @@ export default function RegisterBase() {
         <span color="#555555">—更多登录方式—</span>
         <WechatOutlined style={{ fontSize: "32px" }} />
       </div>
-      <div className="absolute bottom-0 left-0 w-[400px] h-[44px] flex bg-[#4d555d1a]">
+      <div className="absolute bottom-0 left-0 right-0 w-auto h-[44px] flex bg-[#4d555d1a]">
         <span className="select-none m-auto z-10" color="#404040">
           已有账号？<span color="#5ebae2">登录</span>
         </span>

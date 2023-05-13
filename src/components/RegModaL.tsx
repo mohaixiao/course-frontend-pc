@@ -1,14 +1,23 @@
 import Image from "next/image";
 import { ReactElement } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { changeToBase } from "@/slices/registerSlice";
 
 interface RequireAuthProps {
   children: ReactElement;
 }
 
 export default function RegModal({ children }: RequireAuthProps) {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const closeNow = () => {
+    dispatch(changeToBase());
+  };
+
   return (
     <div className="overflow-hidden">
-      <div className="fixed top-0 left-0 right-0 bottom-0 z-0 h-full bg-slate-800">
+      <div className="fixed top-0 left-0 right-0 bottom-0 z-0 h-full bg-[#00000099]">
         <div className="fixed top-0 left-0 right-0 bottom-0 overflow-auto outline-none z-0 w-[640px] h-[500px]  m-auto rounded-xl bg-white flex">
           {/* 背景图  */}
           <div className="after:container-[''] after:absolute after:w-60 after:h-full after:top-0 after:left-0 after:bg-[#00000099] w-60 h-full relative text-white flex flex-col bg-register-background bg-no-repeat z-10">
@@ -38,6 +47,7 @@ export default function RegModal({ children }: RequireAuthProps) {
                 alt="register"
                 width={20}
                 height={20}
+                onClick={closeNow}
               />
             </div>
             {children}
