@@ -34,8 +34,9 @@ export default function RegisterBase() {
 
   // 获取手机验证码
   const getCode = useCallback(async () => {
-    const { regPhone, regPCaptcha, accept, regCode } = form.getFieldsValue();
-    console.log(regPhone, regPCaptcha, regCode);
+    const regPhone = form.getFieldValue("regPhone");
+    const regPCaptcha = form.getFieldValue("regPCaptcha");
+    const regCode = form.getFieldValue("regCode");
 
     // 手机号校验
     if (regPhone) {
@@ -71,7 +72,9 @@ export default function RegisterBase() {
 
   // 立即注册按钮
   const onRegisterClick = async () => {
-    const { regPhone, regCode } = form.getFieldsValue();
+    const regPhone = form.getFieldValue("regPhone");
+    const regCode = form.getFieldValue("regCode");
+    const accept = form.getFieldValue("accept");
 
     if (!regCode) {
       message.error("请先发送手机验证码");
