@@ -7,9 +7,8 @@ interface Props {
 }
 
 export default function RegisterSearch({ getCode }: Props) {
-  const { Search } = Input;
   const [countDown, setCountDown] = useState<number>();
-  const [timeLeft, formattedRes] = useCountDown({ targetDate: countDown });
+  const formattedRes = useCountDown({ targetDate: countDown });
 
   const onSearch = () => {
     let result: boolean = getCode();

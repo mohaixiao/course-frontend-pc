@@ -67,7 +67,7 @@ const useCountdown = (options: Options = {}) => {
 
   const formattedRes = useMemo(() => parseMs(timeLeft), [timeLeft]);
 
-  return [timeLeft, formattedRes] as const;
+  return formattedRes;
 };
 
 export default useCountdown;
