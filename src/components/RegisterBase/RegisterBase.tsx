@@ -8,6 +8,8 @@ import { AppDispatch } from "@/store/store";
 import { useCallback, useRef } from "react";
 import { FormInstance } from "antd/lib/form";
 import RegisterSearch from "../RegisterSearch/RegisterSearch";
+import { sendCode } from "@/network/notify";
+import { register } from "@/network/account";
 
 interface FormData {
   regPhone: string;
@@ -31,7 +33,7 @@ export default function RegisterBase() {
   };
 
   // 获取手机验证码
-  const getCode = useCallback(() => {
+  const getCode = useCallback(async () => {
     const { regPhone, regPCaptcha, accept, regCode } = form.getFieldsValue();
     console.log(regPhone, regPCaptcha, regCode);
 
@@ -56,15 +58,20 @@ export default function RegisterBase() {
     /**
      * 手机验证码接口逻辑
      */
-    message.success("发送手机验证码成功");
+    const data: any = await sendCode(regPhone, regPCaptcha, "register");
+    if (data?.code === 0) {
+      message.success("发送手机验证码成功");
+    } else {
+      resetCaptchaSrc();
+    }
     return true;
   }, []);
 
   const dispatch = useDispatch<AppDispatch>();
 
   // 立即注册按钮
-  const onRegisterClick = () => {
-    const { accept, regCode } = form.getFieldsValue();
+  const onRegisterClick = async () => {
+    const { regPhone, regCode } = form.getFieldsValue();
 
     if (!regCode) {
       message.error("请先发送手机验证码");
@@ -79,8 +86,20 @@ export default function RegisterBase() {
     /**
      * 请求接口逻辑
      */
-    dispatch(changeToBase());
-    dispatch(changeToFinish());
+
+    const data: any = await register({
+      phone: regPhone,
+      code: regCode,
+    });
+
+    console.log(data, "data");
+
+    if (data.code === 0) {
+      dispatch(changeToBase());
+      dispatch(changeToFinish());
+    } else {
+      resetCaptchaSrc();
+    }
   };
 
   return (
