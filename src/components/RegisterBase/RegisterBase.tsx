@@ -1,23 +1,93 @@
-import { Button, Checkbox, Form, Input } from "antd";
+/* eslint-disable @next/next/no-img-element */
+"use client";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import { WechatOutlined } from "@ant-design/icons";
-import Image from "next/image";
 import { changeToBase, changeToFinish } from "@/slices/registerSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
+import { useCallback, useRef } from "react";
+import { FormInstance } from "antd/lib/form";
+import RegisterSearch from "../RegisterSearch/RegisterSearch";
+
+interface FormData {
+  regPhone: string;
+  regPCaptcha: string;
+  accept: boolean;
+}
 
 export default function RegisterBase() {
+  // 图形验证码获取
+  let captchaSrc = useRef();
+  const [form] = Form.useForm<FormInstance<FormData>>();
+
+  // 更新图形验证码
+  const resetCaptchaSrc: () => void = () => {
+    if (captchaSrc?.current?.src?.includes("&time")) {
+      captchaSrc.current.src = captchaSrc?.current?.src?.replace(
+        /&time=[0-9]*/,
+        "&time=" + Date.now()
+      );
+    }
+  };
+
+  // 获取手机验证码
+  const getCode = useCallback(() => {
+    const { regPhone, regPCaptcha, accept, regCode } = form.getFieldsValue();
+    console.log(regPhone, regPCaptcha, regCode);
+
+    // 手机号校验
+    if (regPhone) {
+      const phoneReg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+      if (!phoneReg.test(regPhone)) {
+        message?.error("手机号码不合规");
+        return false;
+      }
+    } else {
+      message?.error("请输入手机号码");
+      return false;
+    }
+
+    // 图形验证码
+    if (!regPCaptcha) {
+      message?.error("请输入图形验证码");
+      return false;
+    }
+
+    /**
+     * 手机验证码接口逻辑
+     */
+    message.success("发送手机验证码成功");
+    return true;
+  }, []);
+
   const dispatch = useDispatch<AppDispatch>();
 
-  const registerNow = () => {
+  // 立即注册按钮
+  const onRegisterClick = () => {
+    const { accept, regCode } = form.getFieldsValue();
+
+    if (!regCode) {
+      message.error("请先发送手机验证码");
+      return;
+    }
+
+    if (!accept) {
+      message.error("请先同意协议");
+      return;
+    }
+
+    /**
+     * 请求接口逻辑
+     */
     dispatch(changeToBase());
     dispatch(changeToFinish());
   };
 
   return (
     <div className="mt-[20px]">
-      <Form autoComplete="off">
+      <Form autoComplete="off" form={form}>
         <Form.Item
-          name="reg"
+          name="regPhone"
           rules={[{ required: true, message: "请输入手机号!" }]}
         >
           <Input placeholder="请输入手机号" />
@@ -26,34 +96,29 @@ export default function RegisterBase() {
         {/* 图形验证码 */}
         <Form.Item
           name="regPCaptcha"
+          className="inline-block"
           rules={[{ required: true, message: "请输入图形验证码!" }]}
         >
           <Input
-            className="w-3/5"
+            className="w-full"
             placeholder="请输入图形验证码"
             autoComplete="false"
           />
-          <Image
-            className="inline-block"
-            width={40}
-            height={30}
-            src=""
-            alt=""
-          />
         </Form.Item>
+        <img
+          ref={captchaSrc as any}
+          className="h-[30px]"
+          src={`http://127.0.0.1:8081/api/notify/v1/captcha?type=register&time=${Date.now()}`}
+          alt="图形验证码"
+          onClick={resetCaptchaSrc}
+        />
 
         {/* 手机验证码 */}
-        <Form.Item
-          name="regCaptcha"
-          rules={[{ required: true, message: "请输入手机号或邮箱验证码!" }]}
-        >
-          <Input className="w-3/5" placeholder="请输入手机号或邮箱验证码" />
-          <Button>获取验证码</Button>
-        </Form.Item>
+        <RegisterSearch getCode={getCode} />
 
         {/* 同意协议 */}
         <div className="flex items-center justify-between">
-          <Form.Item name="accept">
+          <Form.Item name="accept" valuePropName="checked">
             <Checkbox>
               <div className="flex items-center text-[13px]">
                 <div>同意小滴课堂</div>
@@ -77,7 +142,7 @@ export default function RegisterBase() {
             htmlType="submit"
             block
             className="rounded-full bg-[#4d555d] text-center w- text-white cursor-pointer"
-            onClick={registerNow}
+            onClick={onRegisterClick}
           >
             立即注册
           </Button>
