@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import useCountDown from "@/hooks/countDown";
 
 interface Props {
-  getCode: () => boolean;
+  getCode: Function;
 }
 
 export default function RegisterSearch({ getCode }: Props) {
