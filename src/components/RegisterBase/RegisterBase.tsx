@@ -19,7 +19,7 @@ interface FormData {
 
 export default function RegisterBase() {
   // 图形验证码获取
-  let captchaSrc = useRef();
+  let captchaSrc = useRef<any>();
   const [form] = Form.useForm<FormInstance<FormData>>();
 
   // 更新图形验证码
