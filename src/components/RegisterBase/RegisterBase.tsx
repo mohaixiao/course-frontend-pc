@@ -1,13 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { Button, Checkbox, Form, Input, message } from "antd";
-import { WechatOutlined } from "@ant-design/icons";
 import { changeToBase, changeToFinish } from "@/slices/registerSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { useCallback, useRef } from "react";
 import { FormInstance } from "antd/lib/form";
 import RegisterSearch from "../RegisterSearch/RegisterSearch";
+import OAuth from "../OAuth/OAuth";
 import { sendCode } from "@/network/notify";
 import { register } from "@/network/account";
 
@@ -94,9 +94,6 @@ export default function RegisterBase() {
       phone: regPhone,
       code: regCode,
     });
-
-    console.log(data, "data");
-
     if (data.code === 0) {
       dispatch(changeToBase());
       dispatch(changeToFinish());
@@ -170,12 +167,8 @@ export default function RegisterBase() {
           </Button>
         </Form.Item>
       </Form>
-
       {/* 微信注册登录方式  */}
-      <div className="flex flex-col items-center justify-center">
-        <span color="#555555">—更多登录方式—</span>
-        <WechatOutlined style={{ fontSize: "32px" }} />
-      </div>
+      <OAuth />
       <div className="absolute bottom-0 left-0 right-0 w-auto h-[44px] flex bg-[#4d555d1a]">
         <span className="select-none m-auto z-10" color="#404040">
           已有账号？<span color="#5ebae2">登录</span>

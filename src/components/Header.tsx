@@ -4,12 +4,13 @@ import HeaderSearch from "./HeaderSearch/HeaderSearch";
 import RegModal from "./RegModaL";
 import RegisterBase from "./RegisterBase/RegisterBase";
 import RegisterFinish from "./RegisterFinish/RegisterFinish";
-import { changeToBase } from "@/slices/registerSlice";
+import { changeToBase, changeToWechat } from "@/slices/registerSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
+import WechatCode from "./WechatCode/WechatCode";
 
 export default function Header() {
-  const { base } = useSelector((state: RootState) => state.register);
+  const { base, wechat } = useSelector((state: RootState) => state.register);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -67,10 +68,9 @@ export default function Header() {
         </div>
       </div>
       {base && (
-        <RegModal>
-          <RegisterBase></RegisterBase>
-        </RegModal>
+        <RegModal>{wechat ? <WechatCode /> : <RegisterBase />}</RegModal>
       )}
+
       <RegisterFinish />
     </div>
   );

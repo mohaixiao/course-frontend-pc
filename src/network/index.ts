@@ -29,6 +29,7 @@ export default function request(option: AxiosRequestConfig<any>) {
         // 根据不同的返回状态码，返回不同的提示信息
         const data = response.data;
         if (data.code !== 0) {
+          if (data.code === 270004) return;
           message.error(data.msg);
         }
         return response.data;

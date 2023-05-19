@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { ReactElement } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
-import { changeToBase } from "@/slices/registerSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
+import { changeToBase, changeToWechat } from "@/slices/registerSlice";
 
 interface RequireAuthProps {
   children: ReactElement;
@@ -10,9 +10,11 @@ interface RequireAuthProps {
 
 export default function RegModal({ children }: RequireAuthProps) {
   const dispatch = useDispatch<AppDispatch>();
+  const { wechat } = useSelector((state: RootState) => state.register);
 
   const closeNow = () => {
     dispatch(changeToBase());
+    dispatch(changeToWechat());
   };
 
   return (
@@ -39,7 +41,7 @@ export default function RegModal({ children }: RequireAuthProps) {
           <div className="pt-[36px] px-[50px] flex flex-col w-[400px] relative">
             <div className="flex justify-between w-full">
               <span className="text-[20px]  font-semibold text-[#404040]">
-                快速注册
+                {wechat ? "微信扫码" : "快速注册"}
               </span>
               <Image
                 src="/images/svg/close_icon.svg"
