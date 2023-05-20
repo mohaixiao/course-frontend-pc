@@ -80,6 +80,11 @@ export default function Header() {
         <RegModal>{wechat ? <WechatCode /> : <RegisterBase />}</RegModal>
       )}
       {login && <Login />}
+      {!login && wechat && (
+        <RegModal>
+          <WechatCode />
+        </RegModal>
+      )}
       {forget && <Forget />}
       <RegisterFinish />
     </div>

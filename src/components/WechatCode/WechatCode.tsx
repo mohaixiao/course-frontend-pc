@@ -1,14 +1,13 @@
 import { getWechat, watchScan } from "@/network/wechat";
-import { changeToBase, changeToWechat } from "@/slices/registerSlice";
-import { AppDispatch, RootState } from "@/store/store";
+import { changeToBase, changeToWechatTrue } from "@/slices/registerSlice";
+import { AppDispatch } from "@/store/store";
 import { WechatOutlined } from "@ant-design/icons";
 import { message, Spin } from "antd";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const WechatCode = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { wechat, base } = useSelector((state: RootState) => state.register);
 
   let lock = true; // 防抖
   let timer: NodeJS.Timer | null = null;
@@ -38,7 +37,7 @@ const WechatCode = () => {
   const watchScanDate = async (ticket: string) => {
     const res: any = await watchScan(ticket);
     if (res?.code === 0) {
-      dispatch(changeToWechat());
+      dispatch(changeToWechatTrue());
       dispatch(changeToBase());
       clearInterval(timer as NodeJS.Timer);
       message.success("登录成功");

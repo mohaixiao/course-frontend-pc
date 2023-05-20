@@ -15,6 +15,9 @@ const registerSlice = createSlice({
     changeToBase: (state) => {
       state.base = !state.base;
     },
+    changeToBaseFalse: (state) => {
+      state.base = false;
+    },
     changeToFinish: (state) => {
       state.finish = !state.finish;
     },
@@ -32,6 +35,7 @@ export const {
   changeToBase,
   changeToWechatTrue,
   changeToWechatFalse,
+  changeToBaseFalse,
 } = registerSlice.actions;
 
 export default registerSlice.reducer;

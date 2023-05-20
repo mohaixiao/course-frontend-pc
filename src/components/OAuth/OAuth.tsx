@@ -2,12 +2,14 @@ import { WechatOutlined } from "@ant-design/icons";
 import { changeToWechatTrue } from "@/slices/registerSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
+import { changeToLoginFalse } from "@/slices/loginSlice";
 
 const OAuth = ({ type }: { type?: string }) => {
   const dispatch = useDispatch<AppDispatch>();
   // 微信注册登录
   const wechatRegister = () => {
     dispatch(changeToWechatTrue());
+    dispatch(changeToLoginFalse());
   };
 
   return (
