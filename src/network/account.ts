@@ -12,3 +12,43 @@ export const register = (options: { code: string; phone: string }) => {
     data: { code: options.code, phone: options.phone },
   });
 };
+
+/**
+ * 登录接口
+ * @param options code:验证码 phone:手机号 password:密码
+ */
+export const login = (options: {
+  phone: string;
+  code?: string;
+  password?: string;
+}) => {
+  return request({
+    url: "/user/v1/login",
+    method: "post",
+    data: {
+      code: options.code,
+      phone: options.phone,
+      password: options.password,
+    },
+  });
+};
+
+/**
+ * 修改密码接口
+ * @param options code:验证码 phone:手机号 password:密码
+ */
+export const forget = (options: {
+  phone: string;
+  code: string;
+  password: string;
+}) => {
+  return request({
+    url: "/user/v1/forget",
+    method: "post",
+    data: {
+      code: options.code,
+      phone: options.phone,
+      password: options.password,
+    },
+  });
+};

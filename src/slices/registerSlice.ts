@@ -18,13 +18,20 @@ const registerSlice = createSlice({
     changeToFinish: (state) => {
       state.finish = !state.finish;
     },
-    changeToWechat: (state) => {
-      state.wechat = !state.wechat;
+    changeToWechatFalse: (state) => {
+      state.wechat = false;
+    },
+    changeToWechatTrue: (state) => {
+      state.wechat = true;
     },
   },
 });
 
-export const { changeToFinish, changeToBase, changeToWechat } =
-  registerSlice.actions;
+export const {
+  changeToFinish,
+  changeToBase,
+  changeToWechatTrue,
+  changeToWechatFalse,
+} = registerSlice.actions;
 
 export default registerSlice.reducer;

@@ -18,7 +18,7 @@ export default function RegisterSearch({ getCode }: Props) {
 
   return (
     <Form.Item
-      name="regCode"
+      name="code"
       rules={[{ required: true, message: "请输入手机号或邮箱验证码!" }]}
     >
       <Space direction="horizontal">

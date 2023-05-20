@@ -1,12 +1,14 @@
-'use client';
+"use client";
 
 import { configureStore } from "@reduxjs/toolkit";
 import registerReducer from "../slices/registerSlice";
+import loginReducer from "@/slices/loginSlice";
 
 export function makeStore() {
   return configureStore({
     reducer: {
       register: registerReducer,
+      login: loginReducer,
     },
   });
 }

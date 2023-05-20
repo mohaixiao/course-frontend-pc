@@ -1,23 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
-import { Button, Checkbox, Form, Input, message } from "antd";
-import { changeToBase, changeToFinish } from "@/slices/registerSlice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
-import { useCallback, useRef } from "react";
-import { FormInstance } from "antd/lib/form";
-import RegisterSearch from "../RegisterSearch/RegisterSearch";
+import { Form, FormInstance, Input, message } from "antd";
 import OAuth from "../OAuth/OAuth";
+import RegisterSearch from "../RegisterSearch/RegisterSearch";
+import { useCallback, useRef } from "react";
 import { sendCode } from "@/network/notify";
-import { register } from "@/network/account";
+import { AppDispatch } from "@/store/store";
+import { useDispatch } from "react-redux";
+import { changeToLogin } from "@/slices/loginSlice";
+import { login } from "@/network/account";
 
-interface FormData {
-  phone: string;
-  pcaptcha: string;
-  accept: boolean;
-}
-
-export default function RegisterBase() {
+export const Captcha = () => {
   // 图形验证码获取
   let captchaSrc = useRef<any>();
   const [form] = Form.useForm<FormInstance<FormData>>();
@@ -36,7 +28,6 @@ export default function RegisterBase() {
   const getCode = useCallback(async () => {
     const phone = form.getFieldValue("phone");
     const pcaptcha = form.getFieldValue("pcaptcha");
-    const code = form.getFieldValue("code");
 
     // 手机号校验
     if (phone) {
@@ -59,8 +50,13 @@ export default function RegisterBase() {
     /**
      * 手机验证码接口逻辑
      */
-    const data: any = await sendCode({ phone, captcha:pcaptcha, type: "register" });
+    const data: any = await sendCode({
+      phone,
+      captcha: pcaptcha,
+      type: "login",
+    });
     if (data?.code === 0) {
+      localStorage.setItem("token", data.data.split(" ")[1]);
       message.success("发送手机验证码成功");
     } else {
       resetCaptchaSrc();
@@ -70,40 +66,32 @@ export default function RegisterBase() {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  // 立即注册按钮
-  const onRegisterClick = async () => {
+  // 立即登录按钮
+  const onLoginClick = async () => {
     const phone = form.getFieldValue("phone");
     const code = form.getFieldValue("code");
-    const accept = form.getFieldValue("accept");
-
     if (!code) {
       message.error("请先发送手机验证码");
-      return;
-    }
-
-    if (!accept) {
-      message.error("请先同意协议");
       return;
     }
 
     /**
      * 请求接口逻辑
      */
-
-    const data: any = await register({
+    const data: any = await login({
       phone: phone,
       code: code,
     });
     if (data.code === 0) {
-      dispatch(changeToBase());
-      dispatch(changeToFinish());
+      dispatch(changeToLogin());
+      message.success("登录成功！");
     } else {
       resetCaptchaSrc();
     }
   };
 
   return (
-    <div className="mt-[20px]">
+    <div>
       <Form autoComplete="off" form={form}>
         <Form.Item
           name="phone"
@@ -127,7 +115,7 @@ export default function RegisterBase() {
         <img
           ref={captchaSrc as any}
           className="h-[30px]"
-          src={`http://127.0.0.1:8081/api/notify/v1/captcha?type=register&time=${Date.now()}`}
+          src={`http://127.0.0.1:8081/api/notify/v1/captcha?type=login&time=${Date.now()}`}
           alt="图形验证码"
           onClick={resetCaptchaSrc}
         />
@@ -135,40 +123,26 @@ export default function RegisterBase() {
         {/* 手机验证码 */}
         <RegisterSearch getCode={getCode} />
 
-        {/* 同意协议 */}
-        <div className="flex items-center justify-between">
-          <Form.Item name="accept" valuePropName="checked">
-            <Checkbox>
-              <div className="flex items-center text-[13px]">
-                <div>同意小滴课堂</div>
-                <Button
-                  type="link"
-                  size="small"
-                  className="text-[13px] p-0 m-0 "
-                  href="/"
-                  color="#169bd5"
-                >
-                  《隐私策略》
-                </Button>
-              </div>
-            </Checkbox>
-          </Form.Item>
-        </div>
+        <Form.Item>
+          <div className="flex items-center mt-[2px] text-[10px]">
+            <p>登录即同意小滴课堂</p>
+            <a className="ml-[4px] text-[#169bd5]" target="__blank">
+              《隐私政策》
+            </a>
+          </div>
+        </Form.Item>
 
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            block
-            className="rounded-full bg-[#4d555d] text-center w- text-white cursor-pointer"
-            onClick={onRegisterClick}
+          <button
+            type="submit"
+            className="bg-[#4d555d] rounded-full rounded-5px text-center cursor-pointer select-none w-[300px] text-white h-[40px]"
+            onClick={onLoginClick}
           >
-            立即注册
-          </Button>
+            立即登录
+          </button>
         </Form.Item>
       </Form>
-      {/* 微信注册登录方式  */}
-      <OAuth />
+      <OAuth type="login" />
     </div>
   );
-}
+};

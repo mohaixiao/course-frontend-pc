@@ -4,18 +4,25 @@ import HeaderSearch from "./HeaderSearch/HeaderSearch";
 import RegModal from "./RegModaL";
 import RegisterBase from "./RegisterBase/RegisterBase";
 import RegisterFinish from "./RegisterFinish/RegisterFinish";
-import { changeToBase, changeToWechat } from "@/slices/registerSlice";
+import { changeToBase } from "@/slices/registerSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import WechatCode from "./WechatCode/WechatCode";
+import { changeToLogin } from "@/slices/loginSlice";
+import Login from "./Login";
+import Forget from "./Forget";
 
 export default function Header() {
   const { base, wechat } = useSelector((state: RootState) => state.register);
-
+  const { login, forget } = useSelector((state: RootState) => state.login);
   const dispatch = useDispatch<AppDispatch>();
 
-  const register = () => {
+  const showRegister = () => {
     dispatch(changeToBase());
+  };
+
+  const showLogin = () => {
+    dispatch(changeToLogin());
   };
 
   return (
@@ -57,10 +64,12 @@ export default function Header() {
         <HeaderSearch />
         <div>
           <div className="flex justify-center items-center">
-            <span className="mr-8">登录</span>
+            <span className="mr-8 cursor-pointer" onClick={showLogin}>
+              登录
+            </span>
             <span
               className="bg-[#4d555d] p-2 w-[60px] h-[30px] text-white text-center leading-6 rounded-md cursor-pointer"
-              onClick={register}
+              onClick={showRegister}
             >
               注册
             </span>
@@ -70,7 +79,8 @@ export default function Header() {
       {base && (
         <RegModal>{wechat ? <WechatCode /> : <RegisterBase />}</RegModal>
       )}
-
+      {login && <Login />}
+      {forget && <Forget />}
       <RegisterFinish />
     </div>
   );

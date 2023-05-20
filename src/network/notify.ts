@@ -7,14 +7,18 @@ import request from "./index";
  * @param type 场景
  */
 
-export const sendCode = (
-  phone: string,
-  captcha: string,
-  type: "register" | "login"
-) => {
+export const sendCode = (options: {
+  phone: string;
+  captcha: string;
+  type: "register" | "login" | "change";
+}) => {
   return request({
     url: "/notify/v1/send_code",
     method: "post",
-    data: { phone, captcha, type },
+    data: {
+      phone: options.phone,
+      captcha: options.captcha,
+      type: options.type,
+    },
   });
 };
