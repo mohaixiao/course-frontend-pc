@@ -3,7 +3,8 @@ import { message } from "antd";
 import { getUserInfo } from "../network/account";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
+// 同步登录信息
+export const fetchUser = createAsyncThunk("users/fetchUser", async () => {
   const userInfo: any = await getUserInfo();
   return userInfo;
 });
@@ -23,7 +24,7 @@ const initialState = {
     city: null,
     learn_time: null,
     openid: null,
-  }, // 忘记密码第一步
+  },
 } as any;
 
 const userSlice = createSlice({
@@ -36,23 +37,9 @@ const userSlice = createSlice({
     changeIsLogin: (state, action) => {
       state.isLogin = action.payload;
     },
-    // 同步登录信息
-    asyncUserInfo: async (state) => {
-      if (state.token === "") {
-        state.isLogin = false;
-        return;
-      }
-      const userInfo: any = await getUserInfo();
-      if (userInfo.code === 0) {
-        state.isLogin = true;
-        let newPersonalInfo = { ...userInfo.data };
-        state.personalInfo = newPersonalInfo;
-      }
-    },
     //  切换登录状态
     switchLoginState: (state, action) => {
       state.token = action.payload;
-      asyncUserInfo();
     },
     /**
      * 清空用户信息
@@ -70,6 +57,23 @@ const userSlice = createSlice({
       state.personalInfo = {};
       message.success("退出登录成功！");
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchUser.pending, (state, action) => {
+        if (state.token === "") {
+          state.isLogin = false;
+          return;
+        }
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        let userInfo = action.payload;
+        if (userInfo.code === 0) {
+          state.isLogin = true;
+          let newPersonalInfo = { ...userInfo.data };
+          state.personalInfo = newPersonalInfo;
+        }
+      });
   },
 });
 

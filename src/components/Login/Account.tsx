@@ -1,7 +1,7 @@
 import { Form, FormInstance, Input, message } from "antd";
 import OAuth from "../OAuth/OAuth";
 import { changeToLogin, switchForget } from "@/slices/loginSlice";
-import { changeIsLogin, switchLoginState } from "@/slices/userSlice";
+import { changeIsLogin, fetchUser, switchLoginState } from "@/slices/userSlice";
 import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
 import { login } from "@/network/account";
@@ -28,6 +28,7 @@ const Account = () => {
       dispatch(changeToLogin());
       dispatch(changeIsLogin(true));
       dispatch(switchLoginState(data.data.split(" ")[1]));
+      dispatch(fetchUser());
       sessionStorage.setItem("token", data.data.split(" ")[1]);
       message.success("登录成功！");
     }

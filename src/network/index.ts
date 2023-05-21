@@ -1,4 +1,3 @@
-import { RootState } from "@/store/store";
 import { message } from "antd";
 import Axios, { AxiosRequestConfig } from "axios";
 export const baseUrl = "http://127.0.0.1:8081/api";
@@ -16,7 +15,7 @@ export default function request(option: AxiosRequestConfig<any>) {
       (config) => {
         if (typeof window !== "undefined") {
           const token = sessionStorage.getItem("token");
-          config.headers.Authorization = token;
+          config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
       },

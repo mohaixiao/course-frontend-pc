@@ -11,6 +11,7 @@ import { login } from "@/network/account";
 import {
   changeIsLogin,
   changeToken,
+  fetchUser,
   switchLoginState,
 } from "@/slices/userSlice";
 
@@ -61,8 +62,9 @@ export const Captcha = () => {
       type: "login",
     });
     if (data?.code === 0) {
-      dispatch(switchLoginState(data.data.split(" ")[1]));
       sessionStorage.setItem("token", data.data.split(" ")[1]);
+      dispatch(switchLoginState(data.data.split(" ")[1]));
+      dispatch(fetchUser());
       message.success("发送手机验证码成功");
     } else {
       resetCaptchaSrc();

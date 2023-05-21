@@ -35,8 +35,6 @@ const Classify = () => {
       <ul className="relative pl-0 w-[100%]">
         {list &&
           list?.map(({ id, name }: { id: number; name: string }) => {
-            console.log(id);
-
             return (
               <li
                 key={id}
