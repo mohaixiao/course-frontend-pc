@@ -17,6 +17,9 @@ const loginSlice = createSlice({
     changeToLoginFalse: (state) => {
       state.login = false;
     },
+    changeToLoginTrue: (state) => {
+      state.login = true;
+    },
     changeToType: (state) => {
       state.type = !state.type;
     },
@@ -25,7 +28,6 @@ const loginSlice = createSlice({
       state.login = false;
       state.forget = true;
     },
-
     changeToForget: (state) => {
       state.forget = false;
     },
@@ -38,6 +40,7 @@ export const {
   changeToForget,
   switchForget,
   changeToLoginFalse,
+  changeToLoginTrue,
 } = loginSlice.actions;
 
 export default loginSlice.reducer;

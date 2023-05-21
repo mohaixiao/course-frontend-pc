@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, Form, FormInstance, Input, message } from "antd";
+"use client";
+import { Form, FormInstance, Input, message } from "antd";
 import Image from "next/image";
 import { changeToForget } from "@/slices/loginSlice";
 import { AppDispatch } from "@/store/store";

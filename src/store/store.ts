@@ -3,12 +3,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import registerReducer from "../slices/registerSlice";
 import loginReducer from "@/slices/loginSlice";
+import userReducer from "@/slices/userSlice";
 
 export function makeStore() {
   return configureStore({
     reducer: {
       register: registerReducer,
       login: loginReducer,
+      user: userReducer,
     },
   });
 }

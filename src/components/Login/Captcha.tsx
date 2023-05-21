@@ -8,6 +8,11 @@ import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
 import { changeToLogin } from "@/slices/loginSlice";
 import { login } from "@/network/account";
+import {
+  changeIsLogin,
+  changeToken,
+  switchLoginState,
+} from "@/slices/userSlice";
 
 export const Captcha = () => {
   // 图形验证码获取
@@ -56,7 +61,8 @@ export const Captcha = () => {
       type: "login",
     });
     if (data?.code === 0) {
-      localStorage.setItem("token", data.data.split(" ")[1]);
+      dispatch(switchLoginState(data.data.split(" ")[1]));
+      sessionStorage.setItem("token", data.data.split(" ")[1]);
       message.success("发送手机验证码成功");
     } else {
       resetCaptchaSrc();
@@ -84,6 +90,7 @@ export const Captcha = () => {
     });
     if (data.code === 0) {
       dispatch(changeToLogin());
+      dispatch(changeIsLogin(true));
       message.success("登录成功！");
     } else {
       resetCaptchaSrc();

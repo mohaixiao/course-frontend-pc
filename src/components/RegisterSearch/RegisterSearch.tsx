@@ -1,3 +1,4 @@
+"use client";
 import { Button, Form, Input, Space } from "antd";
 import React, { useState } from "react";
 import useCountDown from "@/hooks/countDown";

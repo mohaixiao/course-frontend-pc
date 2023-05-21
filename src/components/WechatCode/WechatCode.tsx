@@ -1,3 +1,4 @@
+"use client";
 import { getWechat, watchScan } from "@/network/wechat";
 import { changeToBase, changeToWechatTrue } from "@/slices/registerSlice";
 import { AppDispatch } from "@/store/store";

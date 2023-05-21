@@ -52,3 +52,13 @@ export const forget = (options: {
     },
   });
 };
+
+/**
+ * 获取用户信息
+ */
+export const getUserInfo = function () {
+  return request({
+    url: "/user/v1/detail",
+    method: "get",
+  });
+};

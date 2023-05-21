@@ -1,6 +1,6 @@
+import { RootState } from "@/store/store";
 import { message } from "antd";
 import Axios, { AxiosRequestConfig } from "axios";
-
 export const baseUrl = "http://127.0.0.1:8081/api";
 
 export default function request(option: AxiosRequestConfig<any>) {
@@ -10,11 +10,12 @@ export default function request(option: AxiosRequestConfig<any>) {
       baseURL: baseUrl,
       timeout: 10000,
     });
+
     // 配置请求和响应拦截
     instance.interceptors.request.use(
       (config) => {
         if (typeof window !== "undefined") {
-          const token = localStorage.getItem("token");
+          const token = sessionStorage.getItem("token");
           config.headers.Authorization = token;
         }
         return config;
