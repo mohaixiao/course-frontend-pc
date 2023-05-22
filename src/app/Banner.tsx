@@ -22,16 +22,14 @@ const Banner = () => {
   }, []);
 
   return (
-    <div className="w-[840px] h-[400px] rounded-md shadow-md mt-4">
-      <Carousel autoplay className="w-[840px] h-[400px]  rounded-[10px]">
-        {banners &&
-          banners?.map((item: string) => (
-            <div key={item} className="w-[840px] h-[400px]">
-              <img src={item} alt="home_swiper_banner" />
-            </div>
-          ))}
-      </Carousel>
-    </div>
+    <Carousel autoplay className="w-[840px] h-[400px]  rounded-[10px]">
+      {banners &&
+        banners?.map((item: string) => (
+          <div key={item} className="w-[840px] h-[400px]">
+            <img src={item} alt="home_swiper_banner" />
+          </div>
+        ))}
+    </Carousel>
   );
 };
 
