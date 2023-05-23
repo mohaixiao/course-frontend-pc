@@ -1,6 +1,6 @@
 "use client";
 import { getWechat, watchScan } from "@/network/wechat";
-import { changeToBase, changeToWechatTrue } from "@/slices/registerSlice";
+import { changeToBase, changeToWechat } from "@/slices/registerSlice";
 import { AppDispatch } from "@/store/store";
 import { WechatOutlined } from "@ant-design/icons";
 import { message, Spin } from "antd";
@@ -38,8 +38,8 @@ const WechatCode = () => {
   const watchScanDate = async (ticket: string) => {
     const res: any = await watchScan(ticket);
     if (res?.code === 0) {
-      dispatch(changeToWechatTrue());
-      dispatch(changeToBase());
+      dispatch(changeToWechat(true));
+      dispatch(changeToBase(false));
       clearInterval(timer as NodeJS.Timer);
       message.success("登录成功");
     }

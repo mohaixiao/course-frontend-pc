@@ -77,12 +77,7 @@ const userSlice = createSlice({
   },
 });
 
-export const {
-  changeIsLogin,
-  changeToken,
-  switchLoginState,
-  asyncUserInfo,
-  logout,
-} = userSlice.actions;
+export const { changeIsLogin, changeToken, switchLoginState, logout } =
+  userSlice.actions;
 
 export default userSlice.reducer;

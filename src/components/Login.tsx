@@ -28,7 +28,7 @@ const Login: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const closeNow = () => {
-    dispatch(changeToLogin());
+    dispatch(changeToLogin(false));
   };
 
   return (

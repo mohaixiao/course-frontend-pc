@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import { changeToBaseFalse, changeToWechatFalse } from "@/slices/registerSlice";
+import { changeToBase, changeToWechat } from "@/slices/registerSlice";
 
 interface RequireAuthProps {
   children: ReactElement;
@@ -13,8 +13,8 @@ export default function RegModal({ children }: RequireAuthProps) {
   const { wechat } = useSelector((state: RootState) => state.register);
 
   const closeNow = () => {
-    dispatch(changeToBaseFalse());
-    dispatch(changeToWechatFalse());
+    dispatch(changeToBase(false));
+    dispatch(changeToWechat(false));
   };
 
   return (

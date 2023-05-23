@@ -25,7 +25,7 @@ const Account = () => {
       password: password,
     });
     if (data.code === 0) {
-      dispatch(changeToLogin());
+      dispatch(changeToLogin(false));
       dispatch(changeIsLogin(true));
       dispatch(switchLoginState(data.data.split(" ")[1]));
       dispatch(fetchUser());

@@ -1,5 +1,4 @@
 "use client";
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -12,34 +11,20 @@ const registerSlice = createSlice({
   name: "register",
   initialState,
   reducers: {
-    changeToBase: (state) => {
-      state.base = !state.base;
+    changeToBase: (state, action) => {
+      state.base = action.payload;
     },
-    changeToBaseFalse: (state) => {
-      state.base = false;
-    },
-    changeToBaseTrue: (state) => {
-      state.base = true;
-    },
+
     changeToFinish: (state) => {
       state.finish = !state.finish;
     },
-    changeToWechatFalse: (state) => {
-      state.wechat = false;
-    },
-    changeToWechatTrue: (state) => {
-      state.wechat = true;
+    changeToWechat: (state, action) => {
+      state.wechat = action.payload;
     },
   },
 });
 
-export const {
-  changeToFinish,
-  changeToBase,
-  changeToWechatTrue,
-  changeToWechatFalse,
-  changeToBaseFalse,
-  changeToBaseTrue,
-} = registerSlice.actions;
+export const { changeToFinish, changeToBase, changeToWechat } =
+  registerSlice.actions;
 
 export default registerSlice.reducer;

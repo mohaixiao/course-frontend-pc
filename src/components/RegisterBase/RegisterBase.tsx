@@ -59,7 +59,11 @@ export default function RegisterBase() {
     /**
      * 手机验证码接口逻辑
      */
-    const data: any = await sendCode({ phone, captcha:pcaptcha, type: "register" });
+    const data: any = await sendCode({
+      phone,
+      captcha: pcaptcha,
+      type: "register",
+    });
     if (data?.code === 0) {
       message.success("发送手机验证码成功");
     } else {
@@ -95,7 +99,7 @@ export default function RegisterBase() {
       code: code,
     });
     if (data.code === 0) {
-      dispatch(changeToBase());
+      dispatch(changeToBase(false));
       dispatch(changeToFinish());
     } else {
       resetCaptchaSrc();

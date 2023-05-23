@@ -11,14 +11,8 @@ const loginSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    changeToLogin: (state) => {
-      state.login = !state.login;
-    },
-    changeToLoginFalse: (state) => {
-      state.login = false;
-    },
-    changeToLoginTrue: (state) => {
-      state.login = true;
+    changeToLogin: (state, action) => {
+      state.login = action.payload;
     },
     changeToType: (state) => {
       state.type = !state.type;
@@ -34,13 +28,7 @@ const loginSlice = createSlice({
   },
 });
 
-export const {
-  changeToLogin,
-  changeToType,
-  changeToForget,
-  switchForget,
-  changeToLoginFalse,
-  changeToLoginTrue,
-} = loginSlice.actions;
+export const { changeToLogin, changeToType, changeToForget, switchForget } =
+  loginSlice.actions;
 
 export default loginSlice.reducer;

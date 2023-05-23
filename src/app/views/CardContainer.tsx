@@ -1,14 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-import CardBase from "@/components/Card/CardBase";
-import { Suspense } from "react";
+import CardBase from "@/app/views/Card/CardBase";
+import { ReactNode, Suspense } from "react";
 import type { ProductList } from "@/types/api";
 import Image from "next/image";
+
 interface IProps {
   title?: string; // 标题
   subTitles?: string[]; // 介绍
   choiceCard: number; // 控制卡片是否展示详情介绍
   cards: ProductList[]; // 课程详情
-  promise?: any;
+  children?: ReactNode;
 }
 
 const CardContainer = async ({
@@ -16,6 +17,7 @@ const CardContainer = async ({
   subTitles,
   choiceCard,
   cards,
+  children,
 }: IProps) => {
   return (
     <div className="w-full">
@@ -40,17 +42,28 @@ const CardContainer = async ({
           </div>
         ))}
       </div>
+      {/* 卡片列表和右侧模块 */}
       <div className="flex items-center cards-bg">
-        <div className="mt-[12px] flex justify-center items-center wrap gap-[24px]">
+        <div className="mt-[12px] flex justify-center items-center flex-wrap gap-[24px]">
           {cards?.map((item, index) => (
-            <Suspense key={index} fallback={<h2>Loading...</h2>}>
-              {/* <CardBase card={item} choiceCard={choiceCard} /> */}
+            <Suspense
+              key={index}
+              fallback={
+                <Image
+                  className=""
+                  src="/images/svg/loader.svg"
+                  width={200}
+                  height={200}
+                  alt="loader"
+                />
+              }
+            >
+              {/* @ts-expect-error Async Server Component */}
+              <CardBase card={item} choiceCard={choiceCard} />
             </Suspense>
           ))}
         </div>
-        <div>
-          <slot />
-        </div>
+        <div>{children}</div>
       </div>
     </div>
   );

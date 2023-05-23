@@ -2,11 +2,10 @@
  * 获取讲师列表
  */
 
-import request from "./index";
+// import request from "./index";
+const baseUrl = "http://127.0.0.1:8081/api";
 
 export const getTeacherList = async () => {
-  return request({
-    url: "/teacher/v1/list",
-    method: "get",
-  });
+  const data = await fetch(`${baseUrl}/teacher/v1/list`);
+  return data.json();
 };

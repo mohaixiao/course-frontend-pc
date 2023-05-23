@@ -1,13 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
-import { changeToBaseTrue } from "@/slices/registerSlice";
-import { changeToLoginTrue } from "@/slices/loginSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { changeToBase } from "@/slices/registerSlice";
+import { changeToLogin } from "@/slices/loginSlice";
 
 const NotLoggedIn = () => {
-  const { base, finish } = useSelector((state: RootState) => state.register);
-  const { login } = useSelector((state: RootState) => state.login);
   const dispatch = useDispatch<AppDispatch>();
 
   return (
@@ -16,14 +14,14 @@ const NotLoggedIn = () => {
         className="mt-10 mb-1 w-[140px] h-[176px] cursor-pointer "
         src="/images/new.png"
         onClick={() => {
-          dispatch(changeToBaseTrue());
+          dispatch(changeToBase(true));
         }}
         alt="newuser"
       />
       <span
         className="text-center text-white bg-[#ff602a] leading-[24px] cursor-pointer rounded-[71px] w-[130px] h-[24px] text-[12px] px-2 pt-2 pb-2 my-auto"
         onClick={() => {
-          dispatch(changeToLoginTrue());
+          dispatch(changeToLogin(true));
         }}
       >
         登录 / 注册

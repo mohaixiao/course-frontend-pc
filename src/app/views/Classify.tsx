@@ -17,16 +17,19 @@ const Classify = () => {
     setShowCategory(true);
   };
 
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<any[]>([]);
 
   useEffect(() => {
     (async function handle() {
       // 课程分类接口请求
-      let data = (await getList())?.data?.map((item: { name: string }) => {
+      let data = ((await getList()) as { data: [] }).data;
+      const list: {
+        name: string;
+      }[] = data.map((item: { name: string }) => {
         item.name = item.name.replace("&", " | ");
         return item;
       });
-      setList(data);
+      setList(list);
     })();
   }, []);
 
@@ -61,8 +64,8 @@ const Classify = () => {
             <span>基础课程</span>
             <div className="flex mt-2">
               {list[now]?.subCategoryList
-                .filter((item) => item.level === "junior")
-                .map((item) => (
+                .filter((item: any) => item.level === "junior")
+                .map((item: any) => (
                   <p key={item.id} className="ml-4 text-[12px] cursor-pointer">
                     {item.name}
                   </p>
@@ -73,8 +76,8 @@ const Classify = () => {
             <span>进阶课程</span>
             <div className="flex mt-2">
               {list[now]?.subCategoryList
-                .filter((item) => item.level === "middle")
-                .map((item) => (
+                .filter((item: any) => item.level === "middle")
+                .map((item: any) => (
                   <p key={item.id} className="ml-4 text-[12px] cursor-pointer">
                     {item.name}
                   </p>

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import HeaderSearch from "./HeaderSearch/HeaderSearch";
@@ -19,11 +19,11 @@ export default function Header() {
   const dispatch = useDispatch<AppDispatch>();
 
   const showRegister = () => {
-    dispatch(changeToBase());
+    dispatch(changeToBase(true));
   };
 
   const showLogin = () => {
-    dispatch(changeToLogin());
+    dispatch(changeToLogin(true));
   };
 
   return (

@@ -1,6 +1,6 @@
 "use client";
-import NotLoggedIn from "./NotLoggedIn";
-import LoggedIn from "./LoggedIn";
+import NotLoggedIn from "./UserInfomation/NotLoggedIn";
+import LoggedIn from "./UserInfomation/LoggedIn";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 
@@ -14,4 +14,3 @@ const UserInformation = () => {
 };
 
 export default UserInformation;
-

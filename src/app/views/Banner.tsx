@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { Carousel } from "antd";
-import { getBanner } from "../network/banner";
+import { getBanner } from "../../network/banner";
 import { useEffect, useState } from "react";
 
 const getBanners = async (url: string) => {
@@ -26,7 +26,11 @@ const Banner = () => {
       {banners &&
         banners?.map((item: string) => (
           <div key={item} className="w-[840px] h-[400px]">
-            <img src={item} alt="home_swiper_banner" />
+            <img
+              src={item}
+              alt="home_swiper_banner"
+              className="w-[840px] h-[400px]"
+            />
           </div>
         ))}
     </Carousel>

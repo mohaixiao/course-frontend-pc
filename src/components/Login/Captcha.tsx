@@ -91,7 +91,7 @@ export const Captcha = () => {
       code: code,
     });
     if (data.code === 0) {
-      dispatch(changeToLogin());
+      dispatch(changeToLogin(false));
       dispatch(changeIsLogin(true));
       message.success("登录成功！");
     } else {
