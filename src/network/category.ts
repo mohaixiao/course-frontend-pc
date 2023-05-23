@@ -2,11 +2,9 @@
  * 课程分类接口
  */
 
-import request from "./index";
+const baseUrl = "http://127.0.0.1:8081/api";
 
-export const getList = () => {
-  return request({
-    url: "/product/v1/category",
-    method: "get",
-  });
+export const getCategoryList = async () => {
+  let data = await fetch(`${baseUrl}/product/v1/category`);
+  return data.json();
 };

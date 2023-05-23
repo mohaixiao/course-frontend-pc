@@ -2,6 +2,7 @@ import "./globals.css";
 import "../../public/antd.min.css";
 import { Inter } from "next/font/google";
 import { Providers } from "./provider";
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

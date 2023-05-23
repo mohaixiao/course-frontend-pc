@@ -18,7 +18,7 @@ export default async function Home() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="w-[1200px] min-w-[1200px] mx-auto">
         <div className="flex justify-betwwen items-center h-[400px]">
           {/* 分类  */}

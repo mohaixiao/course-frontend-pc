@@ -1,5 +1,5 @@
 "use client";
-import { getList } from "@/network/category";
+import { getCategoryList } from "@/network/category";
 import { useEffect, useMemo, useState } from "react";
 import { CaretRightFilled } from "@ant-design/icons";
 
@@ -22,7 +22,7 @@ const Classify = () => {
   useEffect(() => {
     (async function handle() {
       // 课程分类接口请求
-      let data = ((await getList()) as { data: [] }).data;
+      let data = ((await getCategoryList()) as { data: [] }).data;
       const list: {
         name: string;
       }[] = data.map((item: { name: string }) => {
