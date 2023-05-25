@@ -1,21 +1,26 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import HeaderSearch from "./HeaderSearch/HeaderSearch";
-import RegModal from "./RegModaL";
-import RegisterBase from "./RegisterBase/RegisterBase";
-import RegisterFinish from "./RegisterFinish/RegisterFinish";
-import { changeToBase } from "@/slices/registerSlice";
+import HeaderSearch from "./HeaderSearch";
+import RegModal from "../RegModaL";
+import RegisterBase from "../Register/RegisterBase";
+import RegisterFinish from "../Register/RegisterFinish";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import WechatCode from "./WechatCode/WechatCode";
+import WechatCode from "../WechatCode/WechatCode";
 import { changeToLogin } from "@/slices/loginSlice";
-import Login from "./Login";
-import Forget from "./Forget";
+import { changeToBase } from "@/slices/registerSlice";
+import { logout } from "@/slices/userSlice";
+import Login from "../Login/Login";
+import Forget from "../Forget";
+import { Avatar } from "antd";
 
 export default function Header() {
   const { base, wechat } = useSelector((state: RootState) => state.register);
   const { login, forget } = useSelector((state: RootState) => state.login);
+  const { personalInfo, isLogin } = useSelector(
+    (state: RootState) => state.user
+  );
   const dispatch = useDispatch<AppDispatch>();
 
   const showRegister = () => {
@@ -24,6 +29,10 @@ export default function Header() {
 
   const showLogin = () => {
     dispatch(changeToLogin(true));
+  };
+
+  const userLogout = () => {
+    dispatch(logout());
   };
 
   return (
@@ -51,12 +60,12 @@ export default function Header() {
           </Link>
           <Link
             className="no-underline text-[#4f555d] hover:text-[#f38e48]"
-            href="/"
+            href="/videoListPage"
           >
             课程中心
           </Link>
           <a
-            className="no-underline text-[#4f555d] hover:text-[#f38e48]"
+            className="no-underline text-[#4f555d] hover:text-[#f38e48] cursor-pointer"
             target="_blank"
           >
             云服务器
@@ -64,7 +73,34 @@ export default function Header() {
         </div>
         <HeaderSearch />
         <div>
-          <div className="flex justify-center items-center">
+          <div
+            className={`flex justify-center items-center ${
+              isLogin || "hidden"
+            }`}
+          >
+            <Avatar
+              shape="square"
+              size={40}
+              // icon={<UserOutlined />}
+              className="border-solid border-[1px] border-[#f2f2f2]"
+              src={personalInfo?.head_img}
+            />
+
+            <span className="mx-2 text-center">
+              {personalInfo?.username?.slice(0, 3)}...
+            </span>
+            <span
+              className="mx-2 text-center cursor-pointer"
+              onClick={userLogout}
+            >
+              退出登录
+            </span>
+          </div>
+          <div
+            className={`flex justify-center items-center ${
+              isLogin && "hidden"
+            }`}
+          >
             <span className="mr-8 cursor-pointer" onClick={showLogin}>
               登录
             </span>

@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import Banner from "./views/Banner";
 import Classify from "./views/Classify";
 import UserInformation from "./views/UserInformation";
@@ -61,7 +60,6 @@ export default async function Home() {
               />
             }
           >
-            {/* @ts-expect-error Async Server Component */}
             <CardContainer
               title={cardList[0]?.name}
               choiceCard={0}
@@ -168,7 +166,7 @@ export default async function Home() {
           </Suspense>
         </div>
         {/* 侧边栏 */}
-          <BroadSide />
+        <BroadSide />
       </div>
     </>
   );

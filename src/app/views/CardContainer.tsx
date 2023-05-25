@@ -12,7 +12,7 @@ interface IProps {
   children?: ReactNode;
 }
 
-const CardContainer = async ({
+const CardContainer = ({
   title,
   subTitles,
   choiceCard,
@@ -22,26 +22,28 @@ const CardContainer = async ({
   return (
     <div className="w-full">
       {/* 标题和图标 */}
-      <div className={`flex items-center ${title || "hidden"}`}>
-        <div className="flex items-center">
-          <Image
-            src="/images/icon_hot.png"
-            className="h-[29px] w-[29px] mr-[5px]"
-            width={29}
-            height={29}
-            alt="icon_hot"
-          />
-          <h2 className="text-[16px] text-[#4f555d]">{title}</h2>
-        </div>
-        {subTitles?.map((item, index) => (
-          <div
-            key={index}
-            className="ml-[48px] flex justify-center items-center text-[14px]  mr-[40px] pt-[3px]"
-          >
-            {item}
+      {title && (
+        <div className={`flex items-center ${title || "hidden"}`}>
+          <div className="flex items-center">
+            <Image
+              src="/images/icon_hot.png"
+              className="h-[29px] w-[29px] mr-[5px]"
+              width={29}
+              height={29}
+              alt="icon_hot"
+            />
+            <h2 className="text-[16px] text-[#4f555d]">{title}</h2>
           </div>
-        ))}
-      </div>
+          {subTitles?.map((item, index) => (
+            <div
+              key={index}
+              className="ml-[48px] flex justify-center items-center text-[14px]  mr-[40px] pt-[3px]"
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      )}
       {/* 卡片列表和右侧模块 */}
       <div className="flex items-center cards-bg">
         <div className="mt-[12px] flex justify-center items-center flex-wrap gap-[24px]">
@@ -58,7 +60,6 @@ const CardContainer = async ({
                 />
               }
             >
-              {/* @ts-expect-error Async Server Component */}
               <CardBase card={item} choiceCard={choiceCard} />
             </Suspense>
           ))}

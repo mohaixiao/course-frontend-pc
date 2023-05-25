@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { useCallback, useRef } from "react";
 import { FormInstance } from "antd/lib/form";
-import RegisterSearch from "../RegisterSearch/RegisterSearch";
+import RegisterSearch from "./RegisterSearch";
 import OAuth from "../OAuth/OAuth";
 import { sendCode } from "@/network/notify";
 import { register } from "@/network/account";

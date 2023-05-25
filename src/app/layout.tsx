@@ -2,7 +2,7 @@ import "./globals.css";
 import "../../public/antd.min.css";
 import { Inter } from "next/font/google";
 import { Providers } from "./provider";
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 

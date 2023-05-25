@@ -44,7 +44,7 @@ const userSlice = createSlice({
     /**
      * 清空用户信息
      */
-    clearInfo: function (state) {
+    clearInfo: (state) => {
       state.token = "";
       state.isLogin = false;
       state.personalInfo = {};

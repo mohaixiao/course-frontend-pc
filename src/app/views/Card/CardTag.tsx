@@ -18,7 +18,7 @@ const convertLevel = (level: string) => {
   }
 };
 
-const CardTag = async ({ cardTag }: IProps) => {
+const CardTag = ({ cardTag }: IProps) => {
   return (
     <div className="px-[10px] pt-[10px] pb-[10px]">
       <div className="text-[14px] leading-[16px] text-[#404040] h-[32px] w-[260px] break-all text-ellipsis overflow-hidden">

@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
-import Account from "./Login/Account";
-import { Captcha } from "./Login/Captcha";
+import Account from "./Account";
+import { Captcha } from "./Captcha";
 import { changeToLogin } from "@/slices/loginSlice";
 import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";

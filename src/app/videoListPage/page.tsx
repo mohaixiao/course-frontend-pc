@@ -1,18 +1,25 @@
 "use client";
 import { getCategoryList } from "@/network/category";
+import { queryProductByCid } from "@/network/product";
 import { Button } from "antd";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect, useMemo } from "react";
-
-export async function generateMetadata() {
-  return {
-    title: "小滴课堂 - 课程中心",
-  };
-}
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect, useMemo, useCallback } from "react";
+import CardContainer from "../views/CardContainer";
+import Blank from "@/components/Blank";
+import Paginations from "@/components/Pagination";
 
 const Page = () => {
   const [categoryList, setCategoryList] = useState<any[]>();
+  const [productByCid, setProductByCid] = useState<any>();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  // 当前id
+  const currentId = searchParams.get("id") || "0";
+  //   当前cid
+  const currentCid = searchParams.get("cid") || "0";
+  // 当前页数
+  const page = searchParams.get("page");
 
   // 方向列表
   useEffect(() => {
@@ -22,11 +29,45 @@ const Page = () => {
     })();
   }, []);
 
-  const searchParams = useSearchParams();
-  // 当前id
-  const currentId = searchParams.get("id") || "0";
-  //   当前cid
-  const currentCid = searchParams.get("cid") || "0";
+  // 课程列表接口请求
+  useEffect(() => {
+    (async () => {
+      const productByCid = (
+        await queryProductByCid({
+          cid: Number(currentCid) || 0,
+          page: Number(page) || 1,
+          size: 12,
+          cpid: Number(currentId) || 0,
+        })
+      ).data;
+      setProductByCid(productByCid);
+    })();
+  }, [currentCid, currentId, page]);
+
+  // 分页数据
+  const pagination = useMemo(
+    () => ({
+      page: page || 1, // 当前页数
+      pageSize: 12, // 当前页视频个数
+      total: productByCid?.total_record, // 当前视频总数
+      cards: productByCid?.current_data as any, // 视频列表
+    }),
+    [page, productByCid?.current_data, productByCid?.total_record]
+  );
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  // 切换分页
+  const onPaginationChange = (page: any) => {
+    router.push(pathname + "?" + createQueryString("page", page));
+  };
 
   // 分类列表
   const subCategoryList = useMemo(() => {
@@ -99,6 +140,25 @@ const Page = () => {
               </Button>
             ))}
           </div>
+        </div>
+      </div>
+      <div className="w-[1200px] flex justify-center items-center">
+        <div
+          className={`flex w-[898px] flex-col justify-between ${
+            pagination?.cards?.length > 0 ? "" : "hidden"
+          }`}
+        >
+          <div className="flex justify-center items-center flex-wrap">
+            <CardContainer choiceCard={0} cards={pagination?.cards} />
+            <Paginations pagination={pagination} change={onPaginationChange} />
+          </div>
+        </div>
+        <div
+          className={`flex w-[898px] flex-col justify-between ${
+            pagination?.cards?.length > 0 ? "hidden" : ""
+          } w-full text-center mt-[300px]`}
+        >
+          <Blank text="暂无课程。。。" />
         </div>
       </div>
     </div>

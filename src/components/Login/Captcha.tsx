@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Form, FormInstance, Input, message } from "antd";
 import OAuth from "../OAuth/OAuth";
-import RegisterSearch from "../RegisterSearch/RegisterSearch";
+import RegisterSearch from "../Register/RegisterSearch";
 import { useCallback, useRef } from "react";
 import { sendCode } from "@/network/notify";
 import { AppDispatch } from "@/store/store";

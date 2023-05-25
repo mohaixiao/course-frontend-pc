@@ -5,7 +5,7 @@ import Image from "next/image";
 import { changeToForget } from "@/slices/loginSlice";
 import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
-import RegisterSearch from "./RegisterSearch/RegisterSearch";
+import RegisterSearch from "./Register/RegisterSearch";
 import { forget } from "@/network/account";
 import { useCallback, useRef } from "react";
 import { sendCode } from "@/network/notify";
