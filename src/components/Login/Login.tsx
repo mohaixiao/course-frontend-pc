@@ -33,7 +33,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="overflow-hidden">
-      <div className="fixed top-0 left-0 right-0 bottom-0 z-0 h-full bg-[#00000099]">
+      <div className="fixed top-0 left-0 right-0 bottom-0 z-50 h-full bg-[#00000099]">
         <div className="fixed top-0 left-0 right-0 bottom-0 overflow-auto outline-none z-0 w-[400px] h-[500px]  m-auto rounded-xl bg-white flex">
           <Image
             src="/images/svg/close_icon.svg"

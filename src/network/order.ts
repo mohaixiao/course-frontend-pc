@@ -5,8 +5,13 @@
 
 const baseUrl = "http://127.0.0.1:8081/api";
 
-// export const queryPay = async function (id: number) {
-//   const data = await fetch(`${baseUrl}/order/v1/query_pay`, { body: { id } });
+export const queryPay = async function (id: number) {
+  const data = await fetch(`${baseUrl}/order/v1/query_pay`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id }),
+  });
 
-//   return data.json();
-// };
+  return data.json();
+};

@@ -1,53 +1,46 @@
 "use client";
-import { createSlice } from "@reduxjs/toolkit";
+import { queryPay } from "@/network/order";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+// 同步登录信息
+export const fetchCheckPay = createAsyncThunk(
+  "video/fetchCheckPay",
+  async (id: number) => {
+    const data: any = await queryPay(id);
+    return data;
+  }
+);
 
 const initialState = {
-  base: false, // 注册初始页
-  finish: false, // 注册成功页
-  wechat: false,
+  videoInfor: {
+    orderState: true,
+    videoPrice: null,
+    easyPoint: null,
+    logicPoint: null,
+    contentPoint: null,
+  },
 } as any;
 
-const registerSlice = createSlice({
-  name: "register",
+const videoSlice = createSlice({
+  name: "video",
   initialState,
   reducers: {
     changeToBase: (state, action) => {
       state.base = action.payload;
     },
-
-    changeToFinish: (state) => {
-      state.finish = !state.finish;
-    },
-    changeToWechat: (state, action) => {
-      state.wechat = action.payload;
-    },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchCheckPay.pending, (state, action) => {})
+      .addCase(fetchCheckPay.fulfilled, (state, action) => {
+        let data = action.payload;
+        if (data.code === 0) {
+          state.videoInfor.orderState = true;
+        }
+      });
   },
 });
 
-export const { changeToFinish, changeToBase, changeToWechat } =
-  registerSlice.actions;
+export const { changeToBase } = videoSlice.actions;
 
-export default registerSlice.reducer;
-
-/**
- * 视频
- */
-// import { queryPay } from '../api/order';
-// import { defineStore } from 'pinia';
-
-// export const useVideo = defineStore('video', () => {
-//   const videoInfor = reactive({
-//     orderState: false,
-//   });
-//   // 检查课程是否购买
-//   const checkPay = async (id: number) => {
-//     if ((await queryPay(id)).code == 0) {
-//       videoInfor.orderState = true;
-//     }
-//   };
-
-//   return {
-//     videoInfor,
-//     checkPay,
-//   };
-// });
+export default videoSlice.reducer;

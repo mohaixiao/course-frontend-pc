@@ -25,22 +25,38 @@ export const queryProductByCid = async function (params: {
  * 获取视频详情
  * @param id 视频id
  */
-// export const getVideoDetails = async (id: number) => {
-//   const data = await fetch(`${baseUrl}/product/v1/detail`, {
-//     body: { id },
-//   });
-
-//   return data.json();
-// };
+export const getVideoDetails = async (id: number) => {
+  const data = await fetch(`${baseUrl}/product/v1/detail?id=${id}`);
+  return data.json();
+};
 
 /**
  * 最近在学
  * @param id 视频ID
  */
-// export const getLatestLearn = async (id: number) => {
-//   const data = await fetch(`${baseUrl}order/v1/latest`, {
-//     body: { id },
-//   });
+export const getLatestLearn = async (id: number) => {
+  const data = await fetch(`${baseUrl}/order/v1/latest?id=${id}`);
+  return data.json();
+};
 
-//   return data.json();
-// };
+/**
+ * 获取章集
+ * @param id 视频ID
+ */
+export const getChapter = async (id: number) => {
+  const data = await fetch(`${baseUrl}/product/v1/chapter?id=${id}`);
+  return data.json();
+};
+
+/**
+ * 资料下载权限
+ * @param id 视频ID
+ */
+export const getVideoMaterials = async (id: number) => {
+  const data = await fetch(`${baseUrl}/product/v1/material_by_id?id=${id}`, {
+    headers: {
+      Authorization: "Bearer " + sessionStorage.getItem("token"),
+    },
+  });
+  return data.json();
+};

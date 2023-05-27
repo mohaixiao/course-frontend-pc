@@ -4,6 +4,8 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import registerReducer from "../slices/registerSlice";
 import loginReducer from "@/slices/loginSlice";
 import userReducer from "@/slices/userSlice";
+import videoReucer from "@/slices/videoSlice";
+import materialsReducer from "@/slices/materialsSlice";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
   register: registerReducer,
   login: loginReducer,
   user: userReducer,
+  video: videoReucer,
+  materials: materialsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

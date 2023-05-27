@@ -36,7 +36,7 @@ export default function Header() {
   };
 
   return (
-    <div className="flex min-w-[1200px]  basis-full h-[67px] justify-between items-center bg-white sticky top-0 z-10 shadow hover:shadow-lg">
+    <div className="flex min-w-[1200px]  basis-full h-[67px] justify-between items-center bg-white sticky top-0 z-50 shadow hover:shadow-lg">
       <div className="flex basis-full h-[72px] items-center text-[16px] justify-between">
         <div className="flex-[0.6] flex justify-between items-center">
           <Link

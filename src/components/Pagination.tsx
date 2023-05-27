@@ -6,8 +6,8 @@ import { useState } from "react";
 interface IProps {
   change: (page: any) => any;
   pagination: {
-    cards: any; // 视频列表
-    page: number;
+    cards?: any; // 视频列表
+    page: number | string;
     total: number;
     pageSize: number;
   };
@@ -35,13 +35,12 @@ const Paginations = (props: IProps) => {
     cards, // 视频列表
   } = props.pagination;
 
-  const [current, setCurrent] = useState(3);
+  const [current, setCurrent] = useState(page);
 
   const changePage: PaginationProps["onChange"] = (
     page: any,
     pageSize: number
   ) => {
-    console.log(page, pageSize);
     props.change(page);
     setCurrent(page);
   };
@@ -49,7 +48,7 @@ const Paginations = (props: IProps) => {
   return (
     <Pagination
       total={total}
-      current={current}
+      current={current as number}
       defaultCurrent={1}
       itemRender={itemRender}
       pageSize={pageSize}
