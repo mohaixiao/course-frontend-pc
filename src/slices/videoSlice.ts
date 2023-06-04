@@ -36,6 +36,8 @@ const videoSlice = createSlice({
         let data = action.payload;
         if (data.code === 0) {
           state.videoInfor.orderState = true;
+        } else {
+          state.videoInfor.orderState = false;
         }
       });
   },
