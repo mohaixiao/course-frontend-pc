@@ -12,8 +12,9 @@ import { Carousel } from "antd";
 import OutLine from "./OutLine";
 import UserComment from "./UserComment";
 import Materials from "./Materials";
+import { IVideoDitails } from "@/types/api";
 
-const videoDetailsPage = (props: any) => {
+const VideoDetailsPage = (props: any) => {
   const levelMap = { JUNIOR: "初级", MIDDLE: "中级", SENIOR: "高级" };
 
   // 课程介绍海报
@@ -29,7 +30,7 @@ const videoDetailsPage = (props: any) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [detailsData, setDetailsData] = useState<any[]>();
+  const [detailsData, setDetailsData] = useState<IVideoDitails>();
   const [latestLearnData, setLatestLearnData] = useState<any[]>();
   // tab选中状态
   const [activeKey, setActiveKey] = useState(0);
@@ -61,6 +62,9 @@ const videoDetailsPage = (props: any) => {
     })(realVideoId);
   }, []);
 
+  const toPayPage = () => {
+    router.push(`/payPage?id=${realVideoId}`);
+  };
   return (
     <div className="w-full flex justify-center">
       <div className="w-full absolute bg-[#4d555d] h-[350px]"></div>
@@ -147,8 +151,8 @@ const videoDetailsPage = (props: any) => {
               </span>
             ) : (
               <span
-                className="h-[34px] w-[172px] px-0 pt-1 pb-1 mt-[15px] text-center rounded-md font-medium cursor-pointer"
-                v-else
+                className="h-[34px] w-[172px] px-0 pt-1 pb-1 mt-[15px] text-center rounded-md font-medium cursor-pointer bg-[#ccc] text-12 leading-8"
+                onClick={() => toPayPage()}
               >
                 购买
               </span>
@@ -299,4 +303,4 @@ const videoDetailsPage = (props: any) => {
   );
 };
 
-export default videoDetailsPage;
+export default VideoDetailsPage;
