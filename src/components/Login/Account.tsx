@@ -29,7 +29,7 @@ const Account = () => {
       dispatch(changeIsLogin(true));
       dispatch(switchLoginState(data.data.split(" ")[1]));
       dispatch(fetchUser());
-      sessionStorage.setItem("token", data.data.split(" ")[1]);
+      localStorage.setItem("token", data.data.split(" ")[1]);
       message.success("登录成功！");
     }
   };

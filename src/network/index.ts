@@ -14,7 +14,7 @@ export default function request(option: AxiosRequestConfig<any>) {
     instance.interceptors.request.use(
       (config) => {
         if (typeof window !== "undefined") {
-          const token = sessionStorage.getItem("token");
+          const token = localStorage.getItem("token");
           config.headers.Authorization = `Bearer ${token}`;
         }
         return config;

@@ -55,7 +55,7 @@ export const getChapter = async (id: number) => {
 export const getVideoMaterials = async (id: number) => {
   const data = await fetch(`${baseUrl}/product/v1/material_by_id?id=${id}`, {
     headers: {
-      Authorization: "Bearer " + sessionStorage.getItem("token"),
+      Authorization: "Bearer " + localStorage.getItem("token"),
     },
   });
   return data.json();

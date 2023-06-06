@@ -42,9 +42,9 @@ const ChapterSection = ({ item, index }: { item: any; index: number }) => {
                   alt=""
                   src="/images/play.png"
                 />
-                <div ml-2px>{`第 ${subIndex + 1} 节 &nbsp;${
-                  subItem.title
-                }`}</div>
+                <div ml-2px>
+                  {`第 ${subIndex + 1} 节`} &nbsp;{subItem.title}
+                </div>
               </div>
               {subItem.free === 0 && <div className="text-red">试看</div>}
             </div>

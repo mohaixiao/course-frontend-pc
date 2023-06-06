@@ -28,7 +28,7 @@ export const wechatPay = async function (options: {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(options),
   });
@@ -44,7 +44,7 @@ export const queryState = async (outTradeNo: string) => {
     `${baseUrl}/order/v1/query_state?out_trade_no=${outTradeNo}`,
     {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     }
   );
