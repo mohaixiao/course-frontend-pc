@@ -65,6 +65,11 @@ const VideoDetailsPage = (props: any) => {
   const toPayPage = () => {
     router.push(`/payPage?id=${realVideoId}`);
   };
+
+  const toVideoPlayPage = () => {
+    router.push(`/videoPlayPage?id=${realVideoId}`);
+  };
+
   return (
     <div className="w-full flex justify-center">
       <div className="w-full absolute bg-[#4d555d] h-[350px]"></div>
@@ -141,12 +146,10 @@ const VideoDetailsPage = (props: any) => {
               className="w-[172px] h-[117px] cursor-pointer bg-auto "
               src={detailsData?.cover_img}
               alt=""
+              onClick={() => toVideoPlayPage()}
             />
             {videoInfor.orderState ? (
-              <span
-                className=" h-[34px] w-[172px] px-0 pt-1 pb-1 mt-[15px] text-center rounded-md font-medium   text-[#614d28] bg-[#eace9d]  cursor-pointer leading-[26px]"
-                v-if=""
-              >
+              <span className=" h-[34px] w-[172px] px-0 pt-1 pb-1 mt-[15px] text-center rounded-md font-medium   text-[#614d28] bg-[#eace9d]  cursor-pointer leading-[26px]">
                 立即学习
               </span>
             ) : (
