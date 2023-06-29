@@ -1,8 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useRef, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { getChapter } from "@/network/product";
+import { getVideo } from "@/network/video";
 import { useSearchParams } from "next/navigation";
+import Player from "./Player";
 
 const navList = [
   {
@@ -13,12 +16,14 @@ const navList = [
 ];
 
 interface Ref {
-  current: number | undefined;
+  current: number | undefined | null;
 }
 
 function Page() {
   const [expandShow, setExpandShow] = useState(false);
   const navSelect: Ref = useRef();
+  const xdclassPlayer = useRef(null);
+  const router = useRouter();
 
   const navClick = (val: number) => {
     if (navSelect?.current === val) {
@@ -59,12 +64,22 @@ function Page() {
 
   // 目录接口数据
   const [data, setData] = useState({ chapterList: [] });
+  // const [chapterList, setChapterList] = useState();
   const getChapterList = async () => {
     const res = await getChapter(realVideoId);
+    // setChapterList(res.data);
     setData({ ...data, chapterList: res.data });
     let episodeId = _episodeId || res.data[0].episodeList[0].id;
     setEpisodeId(episodeId);
-    console.log(_episodeId, "id");
+  };
+
+  const getVideoData = async (id: number) => {
+    const res = await getVideo({ episodeId: id });
+    if (res.code === 0) {
+      setEpisodeId(id);
+      router.push(`videoPlayPage?id=${realVideoId}&eid=${id}`);
+      xdclassPlayer?.newPlayer(res.data.playResult);
+    }
   };
 
   useEffect(() => {
@@ -141,6 +156,25 @@ function Page() {
             }
           </div>
         )}
+
+        {/* 视频播放器 */}
+        <div className="flex flex-col mr-[80px] flex-1">
+          <div
+            className="relative flex items-center w-full h-[97%]"
+            id="video_wrapper"
+            onClick={() => {
+              navSelect.current = null;
+            }}
+          >
+            <Player
+              ref={xdclassPlayer}
+              getVideoData={getVideoData}
+              _episodeId={_episodeId}
+              realVideoId={realVideoId}
+              chapterList={data.chapterList}
+            ></Player>
+          </div>
+        </div>
       </div>
     </div>
   );
