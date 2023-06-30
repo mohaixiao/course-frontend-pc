@@ -3,6 +3,7 @@ import {
   LegacyRef,
   MutableRefObject,
   forwardRef,
+  useEffect,
   useImperativeHandle,
 } from "react";
 import { useRef } from "react";
@@ -36,12 +37,20 @@ const MyPlayer: React.FC<MyPlayerProps> = forwardRef(function Player(
         fill: true, // 填充模式
         playbackRates: [0.5, 1, 1.25, 1.5, 1.75, 2.0],
       });
+      // 自动播放
+      player.on("loadedmetadata", () => player?.play());
     }
     player.src({
       src: playSrc,
       type: "application/x-mpegURL", // 流设置: m3u8
     });
   };
+
+  useEffect(() => {
+    return () => {
+      if (player) player.dispose();
+    };
+  }, []);
 
   useImperativeHandle(
     ref,
@@ -60,7 +69,7 @@ const MyPlayer: React.FC<MyPlayerProps> = forwardRef(function Player(
       ref={myPlay}
       controls
       style={{ height: "100%", width: "100%" }}
-      class="video-js vjs-default-skin vjs-big-play-centered"
+      className="video-js vjs-default-skin vjs-big-play-centered"
     />
   );
 });

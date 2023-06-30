@@ -13,7 +13,7 @@ export const fetchCheckPay = createAsyncThunk(
 
 const initialState = {
   videoInfor: {
-    orderState: true,
+    orderState: false,
     videoPrice: null,
     easyPoint: null,
     logicPoint: null,

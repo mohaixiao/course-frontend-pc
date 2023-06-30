@@ -2,12 +2,51 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { message } from "antd";
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
 
 const ChapterSection = ({ item, index }: { item: any; index: number }) => {
   // 章节收缩
   const [sectionShow, setSectionShow] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { isLogin } = useSelector((state: RootState) => state.user);
+  const { videoInfor } = useSelector((state: RootState) => state.video);
+  const { orderState } = videoInfor;
+  console.log(orderState, "orderState");
+
+  // 当前id
+  const realVideoId = searchParams.get("id") || "0";
+
   const chapterClick = () => {
     setSectionShow(!sectionShow);
+  };
+
+  // 集点击播放
+  const sectionClick = (val: any) => {
+    // 是否登录
+    if (isLogin) {
+      // 是否购买
+      if (orderState) {
+        toPlayer(val);
+      } else {
+        // 是否试看
+        if (val.free === 0) {
+          toPlayer(val);
+        } else {
+          message.error("请先购买");
+        }
+      }
+    } else {
+      message.error("请先登录");
+    }
+  };
+
+  // 播放视频
+  const toPlayer = (val: any) => {
+    router.push(`/videoPlayPage?id=${realVideoId}&eid=${val.id}`);
   };
 
   return (
@@ -33,7 +72,7 @@ const ChapterSection = ({ item, index }: { item: any; index: number }) => {
       </div>
       {/* 集模块 */}
       {item?.episodeList?.map((subItem: any, subIndex: number) => (
-        <div key={subIndex}>
+        <div key={subIndex} onClick={() => sectionClick(subItem)}>
           {sectionShow && item.episodeList.length > 0 && (
             <div className="text-[16px] mt-[13px] cursor-pointer px-[76px] flex">
               <div className="flex">
@@ -42,7 +81,7 @@ const ChapterSection = ({ item, index }: { item: any; index: number }) => {
                   alt=""
                   src="/images/play.png"
                 />
-                <div ml-2px>
+                <div className="ml-[2px]">
                   {`第 ${subIndex + 1} 节`} &nbsp;{subItem.title}
                 </div>
               </div>

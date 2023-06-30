@@ -78,6 +78,7 @@ function Page() {
     setData({ ...data, chapterList: res.data });
     let episodeId = _episodeId || res.data[0].episodeList[0].id;
     setEpisodeId(episodeId);
+    // await getVideoData(episodeId);
   };
 
   /**
