@@ -22,9 +22,11 @@ interface Ref {
 function Page() {
   const [expandShow, setExpandShow] = useState(false);
   const navSelect: Ref = useRef();
-  const xdclassPlayer = useRef(null);
+  const xdclassPlayer = useRef<any>(null);
+  const list = useRef(null);
   const router = useRouter();
 
+  // 左侧tab项点击
   const navClick = (val: number) => {
     if (navSelect?.current === val) {
       navSelect.current = -1;
@@ -33,13 +35,20 @@ function Page() {
     } else {
       // 将选中的集展示再视口
       if (val === 0) {
-        const oChapterSection = document.querySelector(
-          ".chapter-section"
-        ) as HTMLDivElement;
+        setExpandShow(true);
+        navSelect.current = val;
+
+        // const A = document.getElementById("chapter-section") as HTMLDivElement;
         setTimeout(() => {
+          const oChapterSection = document.getElementById(
+            "chapter_section"
+          ) as HTMLDivElement;
+
           for (let i = 0; i < oChapterSection?.children.length; i++) {
+            // 多少章
             const chapter = oChapterSection?.children[i];
             for (let i = 0; i < chapter?.children[1]?.children?.length; i++) {
+              // 多少集
               const episode = chapter?.children[1]?.children[i];
 
               if (episode.classList.contains("selected")) {
@@ -51,8 +60,6 @@ function Page() {
           }
         });
       }
-      setExpandShow(true);
-      navSelect.current = val;
     }
   };
 
@@ -73,12 +80,23 @@ function Page() {
     setEpisodeId(episodeId);
   };
 
+  /**
+   * 集数选择
+   */
+  const sectionClick = async (val: any) => {
+    await getVideoData(val.id);
+  };
+
+  /**
+   * 视频源
+   */
   const getVideoData = async (id: number) => {
     const res = await getVideo({ episodeId: id });
     if (res.code === 0) {
       setEpisodeId(id);
       router.push(`videoPlayPage?id=${realVideoId}&eid=${id}`);
-      xdclassPlayer?.newPlayer(res.data.playResult);
+
+      xdclassPlayer?.current?.newPlayer(res.data.playResult);
     }
   };
 
@@ -90,8 +108,8 @@ function Page() {
   return (
     <div className="w-full">
       <div className="w-full bg-[#191917] absolute h-[87vh] top-[90px]" />
-      <div className="h-[90vh] mr-[80px]">
-        <div className="w-[140px] h-[87%] flex flex-col absolute top-[50%]">
+      <div className="relative h-[90vh]">
+        <div className="w-[140px] h-[87%] flex flex-col absolute top-[40%]">
           {navList?.map((item, index: any) => (
             <div
               key={index}
@@ -116,12 +134,36 @@ function Page() {
             </div>
           ))}
         </div>
+
+        {/* 视频播放器 */}
+        <div className="flex flex-col mr-[80px] flex-1">
+          <div
+            className="absolute left-[15%] top-[5%] flex items-center w-[80%] h-[87%]"
+            id="video_wrapper"
+            onClick={() => {
+              navSelect.current = null;
+            }}
+          >
+            <Player
+              ref={xdclassPlayer}
+              getVideoData={getVideoData}
+              _episodeId={_episodeId}
+              realVideoId={realVideoId}
+              chapterList={data.chapterList}
+            />
+          </div>
+        </div>
+
         {expandShow && (
-          <div className="z-10">
+          <div className="z-10 ">
             {/* 章集  */}
             {
-              <div className="cursor-pointer bg-[#20201e] text-[#fff] absolute top-[90px] left-[150px] h-[85%]">
-                <div className="p-[10px] overflow-y-auto h-full no-scrollbar">
+              <div className="cursor-pointer bg-[#20201e] text-[#fff] absolute top-[5%] left-[150px] h-[85%]">
+                <div
+                  id="chapter_section"
+                  ref={list}
+                  className="p-[10px] overflow-y-auto h-full no-scrollbar"
+                >
                   {data.chapterList &&
                     data.chapterList.map((item: any, index) => (
                       <div className="mb-[5px]" key={index}>
@@ -143,6 +185,7 @@ function Page() {
                                       : ""
                                   }`}
                                   title={subItem.title}
+                                  onClick={() => sectionClick(subItem)}
                                 >
                                   第 {subIndex + 1} 集 &nbsp;{subItem.title}
                                 </div>
@@ -156,25 +199,6 @@ function Page() {
             }
           </div>
         )}
-
-        {/* 视频播放器 */}
-        <div className="flex flex-col mr-[80px] flex-1">
-          <div
-            className="relative flex items-center w-full h-[97%]"
-            id="video_wrapper"
-            onClick={() => {
-              navSelect.current = null;
-            }}
-          >
-            <Player
-              ref={xdclassPlayer}
-              getVideoData={getVideoData}
-              _episodeId={_episodeId}
-              realVideoId={realVideoId}
-              chapterList={data.chapterList}
-            ></Player>
-          </div>
-        </div>
       </div>
     </div>
   );
