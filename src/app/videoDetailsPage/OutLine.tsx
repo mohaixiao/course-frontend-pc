@@ -9,10 +9,8 @@ const OutLine = ({ id }: { id: number }) => {
   useEffect(() => {
     (async (id: number) => {
       // 目录接口数据
-      console.log(id);
 
       const chapterList = (await getChapter(id)).data;
-      console.log(chapterList, "fdghjkl;");
 
       setChapterList(chapterList);
     })(id);

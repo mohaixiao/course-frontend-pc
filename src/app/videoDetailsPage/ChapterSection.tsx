@@ -15,7 +15,6 @@ const ChapterSection = ({ item, index }: { item: any; index: number }) => {
   const { isLogin } = useSelector((state: RootState) => state.user);
   const { videoInfor } = useSelector((state: RootState) => state.video);
   const { orderState } = videoInfor;
-  console.log(orderState, "orderState");
 
   // 当前id
   const realVideoId = searchParams.get("id") || "0";

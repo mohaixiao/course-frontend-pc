@@ -42,8 +42,6 @@ const UserComment = ({ id }: { id: number }) => {
     setData(data);
   };
 
-  console.log(data?.current_data, "xxx");
-  console.log(data, "dddd");
 
   return (
     <div className="w-full">

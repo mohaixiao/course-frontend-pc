@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getChapter } from "@/network/product";
 import { getVideo } from "@/network/video";
 import { useSearchParams } from "next/navigation";
 import Player from "./Player";
+import { message } from "antd";
 
 const navList = [
   {
@@ -78,30 +79,34 @@ function Page() {
     setData({ ...data, chapterList: res.data });
     let episodeId = _episodeId || res.data[0].episodeList[0].id;
     setEpisodeId(episodeId);
-    // await getVideoData(episodeId);
+
+    await getVideoData(episodeId, res.data);
   };
 
   /**
    * 集数选择
    */
-  const sectionClick = async (val: any) => {
-    await getVideoData(val.id);
+  const sectionClick = async (val: any, chapterList: any[]) => {
+    await getVideoData(val.id, chapterList);
   };
 
   /**
    * 视频源
    */
-  const getVideoData = async (id: number) => {
+  const getVideoData = async (id: number, chapterList: any[]) => {
+
     const res = await getVideo({ episodeId: id });
     if (res.code === 0) {
       setEpisodeId(id);
       router.push(`videoPlayPage?id=${realVideoId}&eid=${id}`);
 
-      xdclassPlayer?.current?.newPlayer(res.data.playResult);
+      xdclassPlayer?.current?.newPlayer(res.data.playResult, chapterList);
+    } else {
+      message.error("没有播放权限");
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getChapterList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -150,7 +155,7 @@ function Page() {
               getVideoData={getVideoData}
               _episodeId={_episodeId}
               realVideoId={realVideoId}
-              chapterList={data.chapterList}
+              chapterList={[...data.chapterList]}
             />
           </div>
         </div>
@@ -186,7 +191,9 @@ function Page() {
                                       : ""
                                   }`}
                                   title={subItem.title}
-                                  onClick={() => sectionClick(subItem)}
+                                  onClick={() =>
+                                    sectionClick(subItem, data.chapterList)
+                                  }
                                 >
                                   第 {subIndex + 1} 集 &nbsp;{subItem.title}
                                 </div>
