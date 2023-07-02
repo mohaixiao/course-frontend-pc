@@ -12,7 +12,7 @@ import "video.js/dist/video-js.css";
 import { IChapter } from "@/types/api";
 
 type MyPlayerProps = {
-  getVideoData: (id: number) => Promise<void>;
+  getVideoData: (id: number) => void;
   ref: MutableRefObject<any>;
   _episodeId: number;
   realVideoId: number;

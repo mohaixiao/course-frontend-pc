@@ -16,7 +16,7 @@ const UserComment = ({ id }: { id: number }) => {
     total: 0,
     pageSize: 8,
   });
-  const [data, setData] = useState();
+  const [data, setData] = useState<any>();
 
   useEffect(() => {
     (async (paginationData, id) => {
@@ -41,7 +41,6 @@ const UserComment = ({ id }: { id: number }) => {
       .data;
     setData(data);
   };
-
 
   return (
     <div className="w-full">
@@ -86,7 +85,7 @@ const UserComment = ({ id }: { id: number }) => {
           <span className="text-[20px] text-[#222222] w-[87px]">逻辑清晰</span>
         </div>
       </div>
-      {(data?.current_data || [])?.map((item) => (
+      {(data?.current_data || [])?.map((item: any) => (
         <div key={item.id} className="ml-[34px] mt-[39px]">
           <div className="flex">
             <img
