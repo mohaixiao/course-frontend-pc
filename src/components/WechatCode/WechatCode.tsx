@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { getWechat, watchScan } from "@/network/wechat";
 import { changeToBase, changeToWechat } from "@/slices/registerSlice";
@@ -32,6 +33,7 @@ const WechatCode = () => {
     return () => {
       clearInterval(timer as NodeJS.Timer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 轮询请求接口查询用户扫码状态

@@ -8,8 +8,8 @@ const BroadSide = () => {
   const [indexShow, setIndexShow] = useState<number>();
   const [flag, setFlag] = useState(false);
   const [width, setWidth] = useState(
-    (document.documentElement.clientWidth || document.body.clientWidth) >
-      1200 + 10 + 120
+      (document.documentElement.clientWidth || document.body.clientWidth) >
+        1200 + 10 + 120
   );
 
   const onMouseenter = (i: number) => {
@@ -33,7 +33,7 @@ const BroadSide = () => {
 
   return (
     <div
-      className={`h-[250px] bg-[#fff] fixed bottom-[35%] right-0 z-100 rounded-md shadow-lg duration-200 ${
+      className={`h-[250px] bg-[#fff] fixed bottom-[35%] right-0 z-50 rounded-md shadow-lg duration-200 ${
         width ? "w-[130px]" : "w-[30px]"
       }`}
       onMouseEnter={() => setWidth(true)}

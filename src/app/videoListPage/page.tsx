@@ -57,7 +57,7 @@ const Page = () => {
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams);
+      const params = new URLSearchParams(searchParams as any);
       params.set(name, value);
       return params.toString();
     },

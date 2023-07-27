@@ -29,6 +29,7 @@ const HotProduct = () => {
 
   // 查看更多的按钮
   const onMoreClick = () => {
+    // @ts-ignore
     if (maxData >= data?.length) {
       message.error("没有更多的数据了");
     } else {

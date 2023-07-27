@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { getVideoDetails } from "@/network/product";
@@ -8,6 +9,7 @@ import { IVideoDitails } from "@/types/api";
 import Wechat from "./Wechat";
 
 const Page = () => {
+
   const searchParams = useSearchParams();
   // 当前id
   const currentId = searchParams.get("id") || "0";

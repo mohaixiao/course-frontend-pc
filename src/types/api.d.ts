@@ -153,8 +153,8 @@ export interface IVideoDitails {
   id: number;
   title: string;
   cover_img: string;
-  old_amount: string;
-  amount: string;
+  old_amount: number;
+  amount: number;
   summary: string;
   detail: string;
   product_type: string;
@@ -282,4 +282,68 @@ export interface IHotProduct {
   id: number;
   title: Title;
   img: string;
+}
+
+// 课程支付二维码
+export interface IWechatPay {
+  code_url: string;
+  out_trade_no: string;
+}
+
+// 轮询查询订单状态
+export interface IOrderState {
+  order_state: string;
+}
+
+// 视频播放地址
+export interface IVideoList {
+  playResult: string;
+  episodeId: string;
+}
+
+// 卷王排行榜
+export interface IDuration {
+  id: number;
+  username: string;
+  head_img: string;
+  minute: string;
+}
+
+// 弹幕列表
+export interface IDanmu {
+  id: number;
+  product_id: number;
+  episode_id: number;
+  account_id: number;
+  head_img: string;
+  username: string;
+  content: string;
+  style: null | string;
+  play_time: number;
+  source_type: string;
+  target_url: null | string;
+  gmt_create: string;
+  gmt_modified: string;
+  del: number;
+}
+
+export interface IPage<T> {
+  current_data: T[];
+  total_page: number;
+  total_record: number;
+}
+
+export interface IPlayRecord {
+  id: number;
+  product_id: number;
+  current_episode_id: number;
+  account_id: number;
+  learn_ids: string;
+  pay_status: string;
+  gmt_modified: string;
+  product_title: string;
+  cover_img: string;
+  episode_num: number;
+  product_type: string;
+  episode_title: string;
 }

@@ -62,3 +62,45 @@ export const getUserInfo = function () {
     method: "get",
   });
 };
+
+/**
+ * 获取最近播放记录数据
+ * @param params size: 每页条数, page: 页码
+ */
+export const getPlayRrecord = async function (params: {
+  page: number;
+  size: number;
+}) {
+  return request({
+    url: "/user/v1/play_record",
+    method: "post",
+    data: params,
+  });
+};
+
+/**
+ * 修改个人信息
+ */
+export const updateUserInfo = async function (params: any) {
+  return request({
+    url: "/user/v1/update",
+    method: "post",
+    data: params,
+  });
+};
+
+/**
+ * 上报学习时长
+ * @param params 请求参数 productId-视频ID episodeId-集ID duration-视频时长
+ */
+export const add = async function (params: {
+  productId: number;
+  episodeId: number;
+  duration: number;
+}) {
+  return request({
+    url: "/user/v1/duration_record",
+    method: "post",
+    data: params,
+  });
+};

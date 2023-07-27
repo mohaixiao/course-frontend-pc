@@ -44,7 +44,9 @@ export const queryState = async (outTradeNo: string) => {
     `${baseUrl}/order/v1/query_state?out_trade_no=${outTradeNo}`,
     {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${
+          localStorage && localStorage.getItem("token")
+        }`,
       },
     }
   );

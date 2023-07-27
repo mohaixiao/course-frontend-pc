@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import Link from "next/link";
@@ -8,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { fetchCheckPay } from "@/slices/videoSlice";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Carousel } from "antd";
+import { Carousel, message } from "antd";
 import OutLine from "./OutLine";
 import UserComment from "./UserComment";
 import Materials from "./Materials";
@@ -61,13 +62,27 @@ const VideoDetailsPage = (props: any) => {
       setLatestLearnData(latestLearnData);
     })(realVideoId);
   }, []);
+  const { isLogin } = useSelector((state: RootState) => state.user);
 
   const toPayPage = () => {
-    router.push(`/payPage?id=${realVideoId}`);
+    if (isLogin) {
+      router.push(`/payPage?id=${realVideoId}`);
+    } else {
+      message.error("请登录");
+    }
   };
 
   const toVideoPlayPage = () => {
-    router.push(`/videoPlayPage?id=${realVideoId}`);
+    if (isLogin) {
+      router.push(`/videoPlayPage?id=${realVideoId}`);
+    } else {
+      message.error("请登录");
+    }
+  };
+
+  const getLevel = (detailsData: any) => {
+    // @ts-ignore
+    return levelMap[detailsData?.course_level as string];
   };
 
   return (
@@ -119,7 +134,7 @@ const VideoDetailsPage = (props: any) => {
             <div className="flex text-left items-center justify-between">
               <div>
                 <span className="text-white pt-[4px] pb-[4px] px-[18px] text-[16px] text-center mr-[12px] bg-[#575f65]">
-                  难度： {levelMap[detailsData?.course_level]}
+                  难度： {getLevel(detailsData)}
                 </span>
                 <span className="text-white pt-[4px] pb-[4px] px-[18px] text-[16px] text-center mr-[12px] bg-[#575f65]">
                   课时：{detailsData?.hour}小时&nbsp;|&nbsp;
@@ -240,7 +255,7 @@ const VideoDetailsPage = (props: any) => {
                 <div>
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: inlineHtml(detailsData?.summary),
+                      __html: inlineHtml(detailsData?.summary as any),
                     }}
                     className="flex justify-center overflow-hidden px-[40px] pt-0 pb-[40px]"
                   ></div>
@@ -258,7 +273,7 @@ const VideoDetailsPage = (props: any) => {
               )}
               {activeKey === 3 && (
                 <div>
-                  <Materials id={realVideoId} />
+                  <Materials id={realVideoId} center={false} />
                 </div>
               )}
             </div>

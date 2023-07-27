@@ -14,10 +14,13 @@ import { logout } from "@/slices/userSlice";
 import Login from "../Login/Login";
 import Forget from "../Forget";
 import { Avatar } from "antd";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const { base, wechat } = useSelector((state: RootState) => state.register);
   const { login, forget } = useSelector((state: RootState) => state.login);
+  const router = useRouter();
+
   const { personalInfo, isLogin } = useSelector(
     (state: RootState) => state.user
   );
@@ -33,6 +36,7 @@ export default function Header() {
 
   const userLogout = () => {
     dispatch(logout());
+    router.push("/");
   };
 
   return (
@@ -72,6 +76,14 @@ export default function Header() {
           </a>
         </div>
         <HeaderSearch />
+        <Link
+          className={`no-underline text-[#4f555d] hover:text-[#f38e48] ${
+            isLogin || "hidden"
+          }`}
+          href="/personal"
+        >
+          个人中心
+        </Link>
         <div>
           <div
             className={`flex justify-center items-center ${

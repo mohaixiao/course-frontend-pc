@@ -6,6 +6,7 @@ import { changeToLogin } from "@/slices/loginSlice";
 import { getVideoMaterialsData } from "@/slices/materialsSlice";
 import { useState } from "react";
 import Image from "next/image";
+import { isBrowser } from "@/utils/getEnv";
 
 const Materials = ({ center, id }: { center: boolean; id: number }) => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -50,7 +51,7 @@ const Materials = ({ center, id }: { center: boolean; id: number }) => {
     dispatch(getVideoMaterialsData(id));
 
     if (noteUrl) {
-      window.open(noteUrl, "_blank");
+      isBrowser() && window.open(noteUrl, "_blank");
     } else {
       message.error("没有权限");
     }

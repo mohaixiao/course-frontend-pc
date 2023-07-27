@@ -10,6 +10,7 @@ import LearnRankList from "@/components/LearnRankList";
 import HotProduct from "@/components/HotProduct";
 import AboutInstructor from "./views/instructor/AboutInstructor";
 import BroadSide from "./views/BroadSide";
+import Footer from "@/components/Footer";
 
 export default async function Home() {
   // 视频卡片列表请求接口
@@ -85,7 +86,6 @@ export default async function Home() {
               />
             }
           >
-            {/* @ts-expect-error Async Server Component */}
             <CardContainer
               title={cardList[1]?.name}
               choiceCard={0}
@@ -111,7 +111,6 @@ export default async function Home() {
               />
             }
           >
-            {/* @ts-expect-error Async Server Component */}
             <CardContainer
               title={cardList[2]?.name}
               choiceCard={0}
@@ -138,7 +137,6 @@ export default async function Home() {
               />
             }
           >
-            {/* @ts-expect-error Async Server Component */}
             <CardContainer
               title={cardList[3]?.name}
               choiceCard={1}
@@ -168,6 +166,7 @@ export default async function Home() {
         {/* 侧边栏 */}
         <BroadSide />
       </div>
+      <Footer />
     </>
   );
 }

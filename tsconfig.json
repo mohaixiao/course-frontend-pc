@@ -35,7 +35,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/components/Header/Header.tsx",
-    "src/components/RegModaL.tsx"
+    "src/components/RegModaL.tsx",
+    "src/app/videoPlayPage/Danmu.tsx"
   ],
   "exclude": [
     "node_modules"

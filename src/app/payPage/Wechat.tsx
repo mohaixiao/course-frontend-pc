@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { Modal, QRCode, message } from "antd";
+import { Modal, message, QRCode } from "antd";
 import { wechatPay, queryState } from "@/network/order";
 import { useRouter } from "next/navigation";
 
@@ -73,7 +73,7 @@ const Wechat = () => {
           </span>
           {/* 微信二维码  */}
           <div className="w-[200px] h-[200px] p-[20px] rounded-[5px]">
-            <QRCode value={url || "-"} size={220} />
+            {/* <QRCode value={url || ""} size={220} /> */}
           </div>
           <p className="mt-[24px] text-[#7f7f7f] ml-[15px]">
             请尽快扫码完成支付，以便订单尽快处理！
